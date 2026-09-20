@@ -8,9 +8,7 @@
 
 <style>
 
-*{
-    box-sizing:border-box;
-}
+*{ box-sizing:border-box; }
 
 body{
     margin:0;
@@ -25,25 +23,12 @@ header{
     border-bottom:1px solid #24518b;
 }
 
-.logo{
-    display:flex;
-    align-items:center;
-    gap:14px;
-}
+.logo{ display:flex; align-items:center; gap:14px; }
+.logo-icon{ font-size:42px; }
 
-.logo-icon{
-    font-size:42px;
-}
+h1{ margin:0; font-size:32px; }
 
-h1{
-    margin:0;
-    font-size:32px;
-}
-
-header p{
-    margin:5px 0 0;
-    color:#9eb6d8;
-}
+header p{ margin:5px 0 0; color:#9eb6d8; }
 
 .layout{
     width:96%;
@@ -64,10 +49,7 @@ header p{
     box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
 
-.panel h2{
-    margin-top:0;
-    font-size:20px;
-}
+.panel h2{ margin-top:0; font-size:20px; }
 
 label{
     display:block;
@@ -88,10 +70,7 @@ input[type="number"]{
     font-size:15px;
 }
 
-input[type="range"]{
-    width:100%;
-    accent-color:#159cff;
-}
+input[type="range"]{ width:100%; accent-color:#159cff; }
 
 .range-value{
     text-align:right;
@@ -111,20 +90,9 @@ button{
     cursor:pointer;
 }
 
-.start{
-    background:#148cff;
-    color:white;
-}
-
-.pause{
-    background:#263b60;
-    color:white;
-}
-
-.reset{
-    background:#a93450;
-    color:white;
-}
+.start{ background:#148cff; color:white; }
+.pause{ background:#263b60; color:white; }
+.reset{ background:#a93450; color:white; }
 
 .formula-box{
     margin-top:18px;
@@ -150,9 +118,7 @@ button{
 
 /* ---------------- SIMULATION ---------------- */
 
-.simulation{
-    min-width:0;
-}
+.simulation{ min-width:0; }
 
 .stage{
     position:relative;
@@ -193,8 +159,6 @@ button{
     color:#9db4d4;
 }
 
-/* recipiente */
-
 .beaker{
     position:absolute;
     left:50%;
@@ -211,9 +175,7 @@ button{
 
 .water{
     position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
+    left:0; right:0; bottom:0;
     height:74%;
     background:linear-gradient(
         to bottom,
@@ -234,8 +196,6 @@ button{
     box-shadow:0 0 20px rgba(57,189,255,.5);
 }
 
-/* ---------------- OBJETO ---------------- */
-
 .material-object{
     position:absolute;
     z-index:10;
@@ -248,45 +208,31 @@ button{
     transition:.5s;
 }
 
-/* aluminio */
-
 .aluminum{
     background:linear-gradient(145deg,#dce3eb,#7f8995,#e9eef2);
     border:2px solid #f5f8fb;
-    box-shadow:
-        inset -15px -12px 25px rgba(0,0,0,.3),
-        0 0 20px rgba(220,230,240,.25);
+    box-shadow:inset -15px -12px 25px rgba(0,0,0,.3),0 0 20px rgba(220,230,240,.25);
 }
-
-/* cobre */
 
 .copper{
     background:linear-gradient(145deg,#e09a68,#9a4b29,#d27748);
     border:2px solid #f1ad80;
 }
 
-/* hierro */
-
 .iron{
     background:linear-gradient(145deg,#9ba4af,#414b57,#747e88);
     border:2px solid #b9c2ca;
 }
-
-/* oro */
 
 .gold{
     background:linear-gradient(145deg,#fff09b,#d4a72c,#fff2a4);
     border:2px solid #fff5bb;
 }
 
-/* plomo */
-
 .lead{
     background:linear-gradient(145deg,#9298a3,#4e5661,#858d98);
     border:2px solid #aeb5bf;
 }
-
-/* etanol */
 
 .ethanol{
     width:190px;
@@ -296,13 +242,7 @@ button{
     border:2px solid rgba(215,246,255,.8);
 }
 
-/* agua no necesita bloque sólido */
-
-.water-object{
-    display:none;
-}
-
-/* ---------------- FUEGO ---------------- */
+.water-object{ display:none; }
 
 .hotplate{
     position:absolute;
@@ -328,8 +268,6 @@ button{
     transition:.3s;
 }
 
-/* ---------------- PARTICULAS ---------------- */
-
 .particle{
     position:absolute;
     width:7px;
@@ -338,8 +276,6 @@ button{
     background:#d9f5ff;
     box-shadow:0 0 9px #bcecff;
 }
-
-/* ---------------- VAPOR ---------------- */
 
 .vapor{
     position:absolute;
@@ -353,21 +289,11 @@ button{
 }
 
 @keyframes vaporUp{
-
-    0%{
-        opacity:0;
-        transform:translate(0,0) scale(.5);
-    }
-
-    20%{
-        opacity:.75;
-    }
-
+    0%{ opacity:0; transform:translate(0,0) scale(.5); }
+    20%{ opacity:.75; }
     100%{
         opacity:0;
-        transform:
-            translate(var(--drift),-230px)
-            scale(2);
+        transform:translate(var(--drift),-230px) scale(2);
     }
 }
 
@@ -387,19 +313,8 @@ button{
     padding:13px;
 }
 
-.metric small{
-    color:#8ea8c9;
-    display:block;
-}
-
-.metric strong{
-    display:block;
-    font-size:21px;
-    margin-top:5px;
-    color:white;
-}
-
-/* ---------------- PROGRESO ---------------- */
+.metric small{ color:#8ea8c9; display:block; }
+.metric strong{ display:block; font-size:21px; margin-top:5px; color:white; }
 
 .progress-container{
     margin-top:12px;
@@ -433,9 +348,7 @@ button{
     padding:20px;
 }
 
-.equation-card h2{
-    margin-top:0;
-}
+.equation-card h2{ margin-top:0; }
 
 .eq-section{
     border-top:1px solid #24486f;
@@ -443,10 +356,7 @@ button{
     margin-top:16px;
 }
 
-.eq-title{
-    color:#45c4ff;
-    font-weight:bold;
-}
+.eq-title{ color:#45c4ff; font-weight:bold; }
 
 .eq{
     margin-top:10px;
@@ -479,14 +389,9 @@ button{
 
 /* ---------------- TABLA ---------------- */
 
-.table-card{
-    grid-column:1 / -1;
-}
+.table-card{ grid-column:1 / -1; }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-}
+table{ width:100%; border-collapse:collapse; }
 
 th,td{
     padding:11px;
@@ -494,13 +399,8 @@ th,td{
     border-bottom:1px solid #21446f;
 }
 
-th{
-    color:#73cfff;
-}
-
-td{
-    color:#d0dbee;
-}
+th{ color:#73cfff; }
+td{ color:#d0dbee; }
 
 /* ---------------- CAMBIO DE FASE ---------------- */
 
@@ -519,2150 +419,988 @@ td{
     color:#91a9c7;
 }
 
-.phase-item.active{
-    background:#126da5;
-    color:white;
+.phase-item.active{ background:#126da5; color:white; }
+.phase-item.change{ background:#7b4d1e; color:white; }
+
+/* ---------------- GRÁFICA T vs Q ---------------- */
+
+.graph-card{ grid-column:1 / -1; }
+
+.graph-card h2{ margin-top:0; }
+
+.graph-wrapper{
+    margin-top:10px;
+    padding:10px;
+    background:#050d19;
+    border:1px solid #1d416b;
+    border-radius:12px;
 }
 
-.phase-item.change{
-    background:#7b4d1e;
-    color:white;
+#graph{
+    width:100%;
+    height:auto;
+    display:block;
+    border-radius:8px;
 }
 
-/* responsive */
+.graph-legend{
+    display:flex;
+    gap:22px;
+    margin-top:10px;
+    font-size:13px;
+    color:#9eb6d8;
+    flex-wrap:wrap;
+}
+
+.legend-dot{
+    display:inline-block;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    margin-right:6px;
+    vertical-align:middle;
+}
+
+.dot-curve{ background:#49c5ff; }
+.dot-current{ background:#ff4a6e; }
+.dot-plateau{ background:#ff8a4c; }
+
+/* ---------------- RESPONSIVE ---------------- */
 
 @media(max-width:1150px){
-
-    .layout{
-        grid-template-columns:280px 1fr;
-    }
-
-    .equation-card{
-        grid-column:1 / -1;
-    }
-
+    .layout{ grid-template-columns:280px 1fr; }
+    .equation-card{ grid-column:1 / -1; }
 }
 
 @media(max-width:800px){
-
-    .layout{
-        grid-template-columns:1fr;
-    }
-
-    .metrics{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .beaker{
-        width:300px;
-    }
-
+    .layout{ grid-template-columns:1fr; }
+    .metrics{ grid-template-columns:repeat(2,1fr); }
+    .beaker{ width:300px; }
 }
 
 </style>
 </head>
 
-
 <body>
 
 <header>
-
     <div class="logo">
-
         <div class="logo-icon">🌡️</div>
-
         <div>
             <h1>ThermoLab</h1>
             <p>Calor específico y cambio de fase</p>
         </div>
-
     </div>
-
 </header>
-
 
 <div class="layout">
 
+    <!-- =====================================================
+         CONTROLES
+    ====================================================== -->
+    <section class="panel">
 
-<!-- =========================================================
-     CONTROLES
-========================================================= -->
+        <h2>⚙️ Configuración</h2>
 
-<section class="panel">
+        <label>Sustancia</label>
+        <select id="material">
+            <option value="water">💧 Agua</option>
+            <option value="aluminum">⬜ Aluminio</option>
+            <option value="copper">🟠 Cobre</option>
+            <option value="iron">⬛ Hierro</option>
+            <option value="gold">🟡 Oro</option>
+            <option value="lead">◼️ Plomo</option>
+            <option value="ethanol">💧 Etanol</option>
+        </select>
 
-    <h2>⚙️ Configuración</h2>
+        <label>Masa (g)</label>
+        <input id="mass" type="number" value="100" min="1" max="5000">
 
-    <label>Sustancia</label>
+        <label>Temperatura inicial (°C)</label>
+        <input id="initialTemp" type="number" value="20">
 
-    <select id="material">
-
-        <option value="water">💧 Agua</option>
-        <option value="aluminum">⬜ Aluminio</option>
-        <option value="copper">🟠 Cobre</option>
-        <option value="iron">⬛ Hierro</option>
-        <option value="gold">🟡 Oro</option>
-        <option value="lead">◼️ Plomo</option>
-        <option value="ethanol">💧 Etanol</option>
-
-    </select>
-
-
-    <label>Masa (g)</label>
-
-    <input
-        id="mass"
-        type="number"
-        value="100"
-        min="1"
-        max="5000"
-    >
-
-
-    <label>Temperatura inicial (°C)</label>
-
-    <input
-        id="initialTemp"
-        type="number"
-        value="20"
-    >
-
-
-    <label>Potencia de calentamiento</label>
-
-    <input
-        id="power"
-        type="range"
-        min="100"
-        max="5000"
-        value="1000"
-    >
-
-    <div class="range-value">
-        <span id="powerValue">1000</span> J/s
-    </div>
-
-
-    <label>Velocidad de simulación</label>
-
-    <input
-        id="speed"
-        type="range"
-        min=".1"
-        max="5"
-        step=".1"
-        value="1"
-    >
-
-    <div class="range-value">
-        <span id="speedValue">1</span>x
-    </div>
-
-
-    <button class="start" id="start">
-        🔥 Iniciar calentamiento
-    </button>
-
-    <button class="pause" id="pause">
-        ⏸ Pausar
-    </button>
-
-    <button class="reset" id="reset">
-        ↻ Reiniciar
-    </button>
-
-
-    <div class="formula-box">
-
-        <div class="formula">
-            Q = m · c · ΔT
+        <label>Potencia de calentamiento</label>
+        <input id="power" type="range" min="100" max="5000" value="1000">
+        <div class="range-value">
+            <span id="powerValue">1000</span> J/s
         </div>
 
-        <div class="formula-small">
-
-            Q = calor<br>
-            m = masa<br>
-            c = calor específico<br>
-            ΔT = cambio de temperatura
-
+        <label>Velocidad de simulación</label>
+        <input id="speed" type="range" min=".1" max="5" step=".1" value="1">
+        <div class="range-value">
+            <span id="speedValue">1</span>x
         </div>
 
-    </div>
+        <button class="start" id="start">🔥 Iniciar calentamiento</button>
+        <button class="pause" id="pause">⏸ Pausar</button>
+        <button class="reset" id="reset">↻ Reiniciar</button>
 
-</section>
-
-
-
-<!-- =========================================================
-     SIMULACION
-========================================================= -->
-
-<section class="simulation">
-
-    <div class="stage" id="stage">
-
-        <div class="status" id="status">
-            Estado: líquido
+        <div class="formula-box">
+            <div class="formula">Q = m · c · ΔT</div>
+            <div class="formula-small">
+                Q = calor<br>
+                m = masa<br>
+                c = calor específico<br>
+                ΔT = cambio de temperatura
+            </div>
         </div>
+    </section>
 
-        <div class="temp" id="temperature">
-            20.0 °C
-        </div>
+    <!-- =====================================================
+         SIMULACIÓN
+    ====================================================== -->
+    <section class="simulation">
 
-        <div class="energy" id="energy">
-            Energía suministrada: 0 J
-        </div>
+        <div class="stage" id="stage">
 
+            <div class="status" id="status">Estado: líquido</div>
 
-        <div class="beaker">
+            <div class="temp" id="temperature">20.0 °C</div>
 
-            <div class="water" id="water">
+            <div class="energy" id="energy">Energía suministrada: 0 J</div>
 
-                <div class="water-surface"></div>
-
+            <div class="beaker">
+                <div class="water" id="water">
+                    <div class="water-surface"></div>
+                </div>
+                <div id="particles"></div>
+                <div id="materialObject" class="material-object"></div>
             </div>
 
-            <div id="particles"></div>
-
-            <div
-                id="materialObject"
-                class="material-object"
-            ></div>
+            <div class="flame" id="flame">🔥</div>
+            <div class="hotplate"></div>
+            <div id="vapors"></div>
 
         </div>
 
-
-        <div class="flame" id="flame">
-            🔥
+        <div class="metrics">
+            <div class="metric">
+                <small>Calor específico</small>
+                <strong id="specificHeat">4.186</strong>
+                <small>J/g·°C</small>
+            </div>
+            <div class="metric">
+                <small>Masa</small>
+                <strong id="massDisplay">100</strong>
+                <small>g</small>
+            </div>
+            <div class="metric">
+                <small>ΔT</small>
+                <strong id="deltaT">0</strong>
+                <small>°C</small>
+            </div>
+            <div class="metric">
+                <small>Calor Q</small>
+                <strong id="qDisplay">0</strong>
+                <small>J</small>
+            </div>
         </div>
 
-        <div class="hotplate"></div>
-
-        <div id="vapors"></div>
-
-    </div>
-
-
-    <div class="metrics">
-
-        <div class="metric">
-
-            <small>Calor específico</small>
-
-            <strong id="specificHeat">
-                4.186
-            </strong>
-
-            <small>J/g·°C</small>
-
+        <div class="progress-container">
+            <div>Progreso del proceso térmico</div>
+            <div class="progress">
+                <div class="progress-bar" id="progress"></div>
+            </div>
         </div>
 
+        <div class="phase-bar">
+            <div class="phase-item" id="solidPhase">🧊 Sólido</div>
+            <div class="phase-item" id="liquidPhase">💧 Líquido</div>
+            <div class="phase-item" id="gasPhase">💨 Gas</div>
+        </div>
+    </section>
 
-        <div class="metric">
+    <!-- =====================================================
+         ECUACIONES
+    ====================================================== -->
+    <section class="equation-card">
 
-            <small>Masa</small>
+        <h2>🧮 Ecuaciones y cálculos</h2>
 
-            <strong id="massDisplay">
-                100
-            </strong>
-
-            <small>g</small>
-
+        <div class="eq-section">
+            <div class="eq-title">🔥 1. Calor específico</div>
+            <div class="eq">Q = m · c · ΔT</div>
+            <div class="calculation" id="specificCalculation"></div>
         </div>
 
-
-        <div class="metric">
-
-            <small>ΔT</small>
-
-            <strong id="deltaT">
-                0
-            </strong>
-
-            <small>°C</small>
-
+        <div class="eq-section">
+            <div class="eq-title">🧊➡️💧➡️💨 2. Cambio de fase</div>
+            <div class="eq">Q = m · L</div>
+            <div class="calculation" id="phaseCalculation"></div>
         </div>
 
-
-        <div class="metric">
-
-            <small>Calor Q</small>
-
-            <strong id="qDisplay">
-                0
-            </strong>
-
-            <small>J</small>
-
+        <div class="eq-section">
+            <div class="eq-title">📐 3. Calor total</div>
+            <div class="eq">
+                Q<sub>total</sub> = Q<sub>sensible</sub> + Q<sub>latente</sub>
+            </div>
+            <div class="calculation" id="totalCalculation"></div>
         </div>
 
-    </div>
+        <div class="explanation" id="explanation"></div>
 
+    </section>
 
-    <div class="progress-container">
+    <!-- =====================================================
+         GRÁFICA T vs Q
+    ====================================================== -->
+    <section class="panel graph-card">
 
-        <div>
-            Progreso del proceso térmico
+        <h2>📈 Curva de calentamiento (T vs Q)</h2>
+
+        <div class="graph-wrapper">
+            <canvas id="graph" width="900" height="320"></canvas>
         </div>
 
-        <div class="progress">
-
-            <div
-                class="progress-bar"
-                id="progress"
-            ></div>
-
+        <div class="graph-legend">
+            <span><span class="legend-dot dot-curve"></span>Curva teórica</span>
+            <span><span class="legend-dot dot-current"></span>Estado actual</span>
+            <span><span class="legend-dot dot-plateau"></span>Meseta de cambio de fase</span>
         </div>
+    </section>
 
-    </div>
+    <!-- =====================================================
+         TABLA
+    ====================================================== -->
+    <section class="panel table-card">
 
+        <h2>📊 Propiedades térmicas</h2>
 
-    <div class="phase-bar">
-
-        <div class="phase-item" id="solidPhase">
-            🧊 Sólido
-        </div>
-
-        <div class="phase-item" id="liquidPhase">
-            💧 Líquido
-        </div>
-
-        <div class="phase-item" id="gasPhase">
-            💨 Gas
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     ECUACIONES
-========================================================= -->
-
-<section class="equation-card">
-
-    <h2>🧮 Ecuaciones y cálculos</h2>
-
-
-    <!-- CALOR ESPECIFICO -->
-
-    <div class="eq-section">
-
-        <div class="eq-title">
-            🔥 1. Calor específico
-        </div>
-
-        <div class="eq">
-            Q = m · c · ΔT
-        </div>
-
-        <div
-            class="calculation"
-            id="specificCalculation"
-        >
-        </div>
-
-    </div>
-
-
-    <!-- CAMBIO DE FASE -->
-
-    <div class="eq-section">
-
-        <div class="eq-title">
-            🧊➡️💧➡️💨 2. Cambio de fase
-        </div>
-
-        <div class="eq">
-            Q = m · L
-        </div>
-
-        <div
-            class="calculation"
-            id="phaseCalculation"
-        >
-        </div>
-
-    </div>
-
-
-    <!-- CALOR TOTAL -->
-
-    <div class="eq-section">
-
-        <div class="eq-title">
-            📐 3. Calor total
-        </div>
-
-        <div class="eq">
-            Q<sub>total</sub> =
-            Q<sub>sensible</sub> +
-            Q<sub>latente</sub>
-        </div>
-
-        <div
-            class="calculation"
-            id="totalCalculation"
-        >
-        </div>
-
-    </div>
-
-
-    <div class="explanation" id="explanation">
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     TABLA
-========================================================= -->
-
-<section class="panel table-card">
-
-    <h2>📊 Propiedades térmicas</h2>
-
-    <table>
-
-        <thead>
-
-            <tr>
-
-                <th>Material</th>
-                <th>c (J/g·°C)</th>
-                <th>T fusión</th>
-                <th>L fusión</th>
-                <th>T ebullición</th>
-                <th>L vaporización</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody id="tableBody"></tbody>
-
-    </table>
-
-</section>
-
+        <table>
+            <thead>
+                <tr>
+                    <th>Material</th>
+                    <th>c (J/g·°C)</th>
+                    <th>T fusión</th>
+                    <th>L fusión</th>
+                    <th>T ebullición</th>
+                    <th>L vaporización</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </section>
 
 </div>
 
-
-
 <script>
 
-/*
-=============================================================
-DATOS FÍSICOS
-=============================================================
-
-Los valores son aproximados y corresponden a valores
-estándar de referencia. Pueden variar ligeramente con
-temperatura y presión.
-
-c  = calor específico
-Tf = temperatura de fusión
-Lf = calor latente de fusión
-Tb = temperatura de ebullición
-Lv = calor latente de vaporización
-
-Unidades:
-
-c  -> J/g·°C
-Lf -> J/g
-Lv -> J/g
-*/
-
+/* ============================================================
+   DATOS FÍSICOS
+============================================================ */
 const materials = {
-
-    water: {
-
-        name:"Agua",
-
-        c:4.186,
-
-        Tf:0,
-
-        Lf:334,
-
-        Tb:100,
-
-        Lv:2257,
-
-        color:"water"
-
-    },
-
-    aluminum: {
-
-        name:"Aluminio",
-
-        c:0.900,
-
-        Tf:660,
-
-        Lf:396,
-
-        Tb:2519,
-
-        Lv:10500,
-
-        color:"aluminum"
-
-    },
-
-    copper: {
-
-        name:"Cobre",
-
-        c:0.385,
-
-        Tf:1085,
-
-        Lf:205,
-
-        Tb:2562,
-
-        Lv:4730,
-
-        color:"copper"
-
-    },
-
-    iron: {
-
-        name:"Hierro",
-
-        c:0.449,
-
-        Tf:1538,
-
-        Lf:247,
-
-        Tb:2862,
-
-        Lv:6080,
-
-        color:"iron"
-
-    },
-
-    gold: {
-
-        name:"Oro",
-
-        c:0.129,
-
-        Tf:1064,
-
-        Lf:64.5,
-
-        Tb:2856,
-
-        Lv:1578,
-
-        color:"gold"
-
-    },
-
-    lead: {
-
-        name:"Plomo",
-
-        c:0.128,
-
-        Tf:327.5,
-
-        Lf:23.2,
-
-        Tb:1749,
-
-        Lv:871,
-
-        color:"lead"
-
-    },
-
-    ethanol: {
-
-        name:"Etanol",
-
-        c:2.44,
-
-        Tf:-114,
-
-        Lf:108,
-
-        Tb:78.4,
-
-        Lv:841,
-
-        color:"ethanol"
-
-    }
-
+    water:    { name:"Agua",     c:4.186, Tf:0,     Lf:334,   Tb:100,   Lv:2257,  color:"water"    },
+    aluminum: { name:"Aluminio", c:0.900, Tf:660,   Lf:396,   Tb:2519,  Lv:10500, color:"aluminum" },
+    copper:   { name:"Cobre",    c:0.385, Tf:1085,  Lf:205,   Tb:2562,  Lv:4730,  color:"copper"   },
+    iron:     { name:"Hierro",   c:0.449, Tf:1538,  Lf:247,   Tb:2862,  Lv:6080,  color:"iron"     },
+    gold:     { name:"Oro",      c:0.129, Tf:1064,  Lf:64.5,  Tb:2856,  Lv:1578,  color:"gold"     },
+    lead:     { name:"Plomo",    c:0.128, Tf:327.5, Lf:23.2,  Tb:1749,  Lv:871,   color:"lead"     },
+    ethanol:  { name:"Etanol",   c:2.44,  Tf:-114,  Lf:108,   Tb:78.4,  Lv:841,   color:"ethanol"  }
 };
 
+/* ============================================================
+   ESTADO
+============================================================ */
+let running          = false;
+let lastTime         = null;
+let totalEnergy      = 0;
+let currentTemp      = 20;
 
-/*
-=============================================================
-VARIABLES
-=============================================================
-*/
+let fusionEnergyUsed = 0;
+let vaporEnergyUsed  = 0;
 
-let running = false;
+let inMelting        = false;
+let inBoiling        = false;
 
-let lastTime = null;
+/* ============================================================
+   ELEMENTOS
+============================================================ */
+const materialSelect      = document.getElementById("material");
+const massInput           = document.getElementById("mass");
+const initialTempInput    = document.getElementById("initialTemp");
+const powerInput          = document.getElementById("power");
+const speedInput          = document.getElementById("speed");
 
-let totalEnergy = 0;
+const temperatureElement  = document.getElementById("temperature");
+const energyElement       = document.getElementById("energy");
+const statusElement       = document.getElementById("status");
 
-let currentTemp = 20;
+const objectElement       = document.getElementById("materialObject");
+const waterElement        = document.getElementById("water");
+const particlesElement    = document.getElementById("particles");
+const vaporsElement       = document.getElementById("vapors");
+const flameElement        = document.getElementById("flame");
 
+const specificHeatElement = document.getElementById("specificHeat");
+const massDisplay         = document.getElementById("massDisplay");
+const deltaTElement       = document.getElementById("deltaT");
+const qDisplay            = document.getElementById("qDisplay");
+const progressElement     = document.getElementById("progress");
 
-/*
-=============================================================
-ELEMENTOS
-=============================================================
-*/
+const specificCalculation = document.getElementById("specificCalculation");
+const phaseCalculation    = document.getElementById("phaseCalculation");
+const totalCalculation    = document.getElementById("totalCalculation");
+const explanationElement  = document.getElementById("explanation");
 
-const materialSelect =
-    document.getElementById("material");
+const graphCanvas         = document.getElementById("graph");
 
-const massInput =
-    document.getElementById("mass");
-
-const initialTempInput =
-    document.getElementById("initialTemp");
-
-const powerInput =
-    document.getElementById("power");
-
-const speedInput =
-    document.getElementById("speed");
-
-const temperatureElement =
-    document.getElementById("temperature");
-
-const energyElement =
-    document.getElementById("energy");
-
-const statusElement =
-    document.getElementById("status");
-
-const objectElement =
-    document.getElementById("materialObject");
-
-const waterElement =
-    document.getElementById("water");
-
-const particlesElement =
-    document.getElementById("particles");
-
-const vaporsElement =
-    document.getElementById("vapors");
-
-const flameElement =
-    document.getElementById("flame");
-
-const specificHeatElement =
-    document.getElementById("specificHeat");
-
-const massDisplay =
-    document.getElementById("massDisplay");
-
-const deltaTElement =
-    document.getElementById("deltaT");
-
-const qDisplay =
-    document.getElementById("qDisplay");
-
-const progressElement =
-    document.getElementById("progress");
-
-const specificCalculation =
-    document.getElementById("specificCalculation");
-
-const phaseCalculation =
-    document.getElementById("phaseCalculation");
-
-const totalCalculation =
-    document.getElementById("totalCalculation");
-
-const explanationElement =
-    document.getElementById("explanation");
-
-
-/*
-=============================================================
-MATERIAL ACTUAL
-=============================================================
-*/
-
+/* ============================================================
+   HELPERS
+============================================================ */
 function getMaterial(){
-
-    return materials[
-        materialSelect.value
-    ];
-
+    return materials[materialSelect.value];
 }
 
-
-/*
-=============================================================
-CALCULO DE ENERGIA NECESARIA
-=============================================================
-
-Devuelve cuánta energía hace falta para pasar desde
-la temperatura inicial hasta determinada temperatura.
-
-Aquí SÍ se tiene en cuenta:
-
-1. calor sensible
-2. fusión
-3. calentamiento del líquido
-4. vaporización
-*/
-
-function energyForTemperature(T, m, material){
-
-    const start =
-        Number(initialTempInput.value);
-
-    const mass =
-        Number(m);
-
-    const c =
-        material.c;
-
-    let Q = 0;
-
-
-    /*
-    CASO: temperatura inicial por debajo
-    del punto de fusión
-    */
-
-    if(start < material.Tf){
-
-        if(T <= material.Tf){
-
-            return mass *
-                   c *
-                   (T - start);
-
-        }
-
-        Q += mass *
-             c *
-             (material.Tf - start);
-
-
-        /*
-        calor latente de fusión
-        */
-
-        if(T <= material.Tf){
-
-            return Q;
-
-        }
-
-        Q += mass *
-             material.Lf;
-
-
-        /*
-        calentamiento del líquido
-        */
-
-        if(T <= material.Tb){
-
-            Q += mass *
-                 c *
-                 (T - material.Tf);
-
-            return Q;
-
-        }
-
-
-        /*
-        llegar al punto de ebullición
-        */
-
-        Q += mass *
-             c *
-             (material.Tb - material.Tf);
-
-
-        /*
-        vaporización parcial
-        */
-
-        return Q +
-               mass *
-               material.Lv;
-
-    }
-
-
-    /*
-    CASO NORMAL:
-    empieza como líquido
-    */
-
-    if(T <= material.Tb){
-
-        return mass *
-               c *
-               (T - start);
-
-    }
-
-
-    /*
-    llegar a ebullición
-    */
-
-    Q =
-        mass *
-        c *
-        (material.Tb - start);
-
-
-    /*
-    calor latente de vaporización
-    */
-
-    return Q +
-           mass *
-           material.Lv;
-
+function safeNumber(input, fallback){
+    const v = Number(input.value);
+    return Number.isFinite(v) && input.value !== "" ? v : fallback;
 }
 
-
-/*
-=============================================================
-ACTUALIZAR OBJETO VISUAL
-=============================================================
-*/
-
-function updateMaterialVisual(){
-
-    const material =
-        getMaterial();
-
-    objectElement.className =
-        "material-object";
-
-
-    objectElement.classList.add(
-        material.color
-    );
-
-
-    /*
-    El agua se representa como líquido.
-    Los demás materiales aparecen como una pieza.
-    */
-
-    if(materialSelect.value === "water"){
-
-        objectElement.classList.add(
-            "water-object"
-        );
-
-        objectElement.style.display =
-            "none";
-
-    }
-    else{
-
-        objectElement.style.display =
-            "block";
-
-    }
-
+function resetState(){
+    running = false;
+    lastTime = null;
+    totalEnergy = 0;
+    fusionEnergyUsed = 0;
+    vaporEnergyUsed = 0;
+    inMelting = false;
+    inBoiling = false;
+    currentTemp = safeNumber(initialTempInput, 20);
+    vaporsElement.innerHTML = "";
 }
 
-
-/*
-=============================================================
-PARTICULAS
-=============================================================
-
-Las partículas NO son el objeto principal.
-
-Son una representación educativa del movimiento
-microscópico.
-*/
+/* ============================================================
+   PARTÍCULAS
+============================================================ */
+function updateParticles(){
+    const speedFactor = 1 + Math.min(currentTemp / 300, 4);
+    const particles = particlesElement.querySelectorAll(".particle");
+    particles.forEach(p => {
+        if (typeof p.getAnimations === "function"){
+            p.getAnimations().forEach(anim => {
+                anim.updatePlaybackRate(speedFactor);
+            });
+        }
+    });
+}
 
 function createParticles(){
-
     particlesElement.innerHTML = "";
+    const isWater = materialSelect.value === "water";
+    const number  = isWater ? 22 : 14;
 
-    const material =
-        getMaterial();
-
-    /*
-    En el agua mostramos partículas dentro del agua.
-    En los sólidos también pueden aparecer, pero menos
-    para que se vea la pieza macroscópica.
-    */
-
-    let number = 20;
-
-    if(materialSelect.value !== "water"){
-        number = 12;
-    }
-
-    for(let i=0;i<number;i++){
-
-        const p =
-            document.createElement("div");
-
-        p.className =
-            "particle";
-
-        p.style.left =
-            (10 + Math.random()*360) + "px";
-
-        p.style.top =
-            (80 + Math.random()*220) + "px";
-
+    for (let i = 0; i < number; i++){
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = (10 + Math.random() * 360) + "px";
+        p.style.top  = (80 + Math.random() * 220) + "px";
         particlesElement.appendChild(p);
 
-        animateParticle(p);
+        const duration = 700 + Math.random() * 1200;
+        const distance = 5 + Math.abs(currentTemp) / 20;
 
+        p.animate(
+            [
+                { transform: "translate(0,0)" },
+                { transform: `translate(${(Math.random()-0.5)*distance*15}px,
+                                        ${(Math.random()-0.5)*distance*15}px)` }
+            ],
+            { duration, iterations: Infinity, direction: "alternate" }
+        );
     }
-
 }
 
-
-function animateParticle(p){
-
-    const duration =
-        700 + Math.random()*1200;
-
-    const distance =
-        5 + Math.abs(currentTemp)/20;
-
-    p.animate(
-
-        [
-
-            {
-                transform:"translate(0,0)"
-            },
-
-            {
-                transform:
-                `translate(
-                    ${(Math.random()-.5)*distance*15}px,
-                    ${(Math.random()-.5)*distance*15}px
-                )`
-            }
-
-        ],
-
-        {
-
-            duration:duration,
-
-            iterations:Infinity,
-
-            direction:"alternate"
-
-        }
-
-    );
-
-}
-
-
-/*
-=============================================================
-VAPOR
-=============================================================
-*/
-
+/* ============================================================
+   VAPOR
+============================================================ */
 function createVapor(){
-
-    const v =
-        document.createElement("div");
-
-    v.className =
-        "vapor";
-
-    v.style.left =
-        (35 + Math.random()*30) + "%";
-
-    v.style.bottom =
-        "300px";
-
-    v.style.setProperty(
-        "--drift",
-        ((Math.random()-.5)*130)+"px"
-    );
-
+    const v = document.createElement("div");
+    v.className = "vapor";
+    v.style.left   = (35 + Math.random() * 30) + "%";
+    v.style.bottom = "300px";
+    v.style.setProperty("--drift", ((Math.random() - 0.5) * 130) + "px");
     vaporsElement.appendChild(v);
-
-    setTimeout(
-        ()=>v.remove(),
-        4500
-    );
-
+    setTimeout(() => v.remove(), 4500);
 }
 
-
-/*
-=============================================================
-DETERMINAR FASE
-=============================================================
-*/
-
+/* ============================================================
+   FASE
+============================================================ */
 function getPhase(){
-
-    const material =
-        getMaterial();
-
-    /*
-    Si está por debajo de fusión
-    */
-
-    if(currentTemp < material.Tf){
-
-        return "solid";
-
-    }
-
-
-    /*
-    En el punto de fusión
-    */
-
-    if(
-        Math.abs(currentTemp-material.Tf)<0.001
-    ){
-
-        return "melting";
-
-    }
-
-
-    /*
-    Líquido
-    */
-
-    if(currentTemp < material.Tb){
-
-        return "liquid";
-
-    }
-
-
-    /*
-    Ebullición
-    */
-
+    const m = getMaterial();
+    if (inMelting) return "melting";
+    if (inBoiling) return "boiling";
+    if (currentTemp < m.Tf) return "solid";
+    if (currentTemp < m.Tb) return "liquid";
     return "boiling";
-
 }
-
-
-/*
-=============================================================
-ACTUALIZAR FASE VISUAL
-=============================================================
-*/
 
 function updatePhase(){
+    const m = getMaterial();
+    const phase = getPhase();
 
-    const material =
-        getMaterial();
+    document.querySelectorAll(".phase-item").forEach(el =>
+        el.classList.remove("active", "change")
+    );
 
-    const phase =
-        getPhase();
-
-
-    document
-        .querySelectorAll(".phase-item")
-        .forEach(
-            element =>
-            element.classList.remove(
-                "active",
-                "change"
-            )
-        );
-
-
-    if(phase === "solid"){
-
-        document
-            .getElementById("solidPhase")
-            .classList.add("active");
-
-        statusElement.textContent =
-            "🧊 Estado: sólido";
-
+    if (phase === "solid"){
+        document.getElementById("solidPhase").classList.add("active");
+        statusElement.textContent = "🧊 Estado: sólido";
+    }
+    else if (phase === "melting"){
+        document.getElementById("solidPhase").classList.add("change");
+        document.getElementById("liquidPhase").classList.add("change");
+        statusElement.textContent = "🧊➡️💧 Fusión: temperatura constante";
+    }
+    else if (phase === "liquid"){
+        document.getElementById("liquidPhase").classList.add("active");
+        statusElement.textContent = "💧 Estado: líquido";
+    }
+    else {
+        document.getElementById("liquidPhase").classList.add("change");
+        document.getElementById("gasPhase").classList.add("active");
+        statusElement.textContent = "💨 Ebullición / vaporización";
     }
 
-
-    else if(phase === "melting"){
-
-        document
-            .getElementById("solidPhase")
-            .classList.add("change");
-
-        document
-            .getElementById("liquidPhase")
-            .classList.add("change");
-
-        statusElement.textContent =
-            "🧊➡️💧 Fusión: temperatura constante";
-
-    }
-
-
-    else if(phase === "liquid"){
-
-        document
-            .getElementById("liquidPhase")
-            .classList.add("active");
-
-        statusElement.textContent =
-            "💧 Estado: líquido";
-
-    }
-
-
-    else{
-
-        document
-            .getElementById("liquidPhase")
-            .classList.add("change");
-
-        document
-            .getElementById("gasPhase")
-            .classList.add("active");
-
-        statusElement.textContent =
-            "💨 Ebullición / vaporización";
-
-    }
-
-
-    /*
-    Agua: vapor visual
-    */
-
-    if(
-        materialSelect.value === "water" &&
-        currentTemp >= material.Tb
-    ){
-
+    if (materialSelect.value === "water" && currentTemp >= m.Tb){
         waterElement.style.background =
             "linear-gradient(to bottom,#35bfff,#1261a0)";
-
     }
-
 }
 
+/* ============================================================
+   VISUAL DEL MATERIAL
+============================================================ */
+function updateMaterialVisual(){
+    const m = getMaterial();
+    objectElement.className = "material-object";
+    objectElement.classList.add(m.color);
+    objectElement.style.display = (materialSelect.value === "water") ? "none" : "block";
+}
 
-/*
-=============================================================
-CALCULOS MOSTRADOS
-=============================================================
-*/
-
+/* ============================================================
+   CÁLCULOS
+============================================================ */
 function updateCalculations(){
+    const m    = getMaterial();
+    const mass = safeNumber(massInput, 100);
+    const Ti   = safeNumber(initialTempInput, 20);
+    const T    = currentTemp;
+    const dT   = T - Ti;
 
-    const material =
-        getMaterial();
-
-    const m =
-        Number(massInput.value);
-
-    const Ti =
-        Number(initialTempInput.value);
-
-    const T =
-        currentTemp;
-
-    const deltaT =
-        T - Ti;
-
-
-    /*
-    CALOR SENSIBLE
-    */
-
-    const Qsensible =
-        m *
-        material.c *
-        deltaT;
-
+    const Qsensible = mass * m.c * dT;
 
     specificCalculation.innerHTML = `
-
         <b>Datos:</b><br>
-
-        m = ${m.toFixed(2)} g<br>
-
-        c = ${material.c.toFixed(3)} J/g·°C<br>
-
-        ΔT = ${T.toFixed(2)} − ${Ti.toFixed(2)}
-        = ${deltaT.toFixed(2)} °C
-
+        m = ${mass.toFixed(2)} g<br>
+        c = ${m.c.toFixed(3)} J/g·°C<br>
+        ΔT = ${T.toFixed(2)} − ${Ti.toFixed(2)} = ${dT.toFixed(2)} °C
         <br><br>
-
-        <b>Q = m · c · ΔT</b>
-
-        <br>
-
-        Q = ${m.toFixed(2)}
-        × ${material.c.toFixed(3)}
-        × ${deltaT.toFixed(2)}
-
-        <br>
-
-        <b>
-        Q = ${Math.max(0,Qsensible).toFixed(2)} J
-        </b>
-
+        <b>Q = m · c · ΔT</b><br>
+        Q = ${mass.toFixed(2)} × ${m.c.toFixed(3)} × ${dT.toFixed(2)}<br>
+        <b>Q = ${Math.max(0, Qsensible).toFixed(2)} J</b>
     `;
 
-
-    /*
-    CAMBIO DE FASE
-    */
-
-    if(T >= material.Tb){
-
-        const Qheat =
-            m *
-            material.c *
-            (material.Tb - Ti);
-
-        const Qlatent =
-            m *
-            material.Lv;
+    if (T >= m.Tb){
+        const Qheat   = mass * m.c * (m.Tb - Ti);
+        const Qlatent = mass * m.Lv;
 
         phaseCalculation.innerHTML = `
-
             <b>Vaporización:</b><br>
-
-            T<sub>eb</sub> =
-            ${material.Tb} °C
-
-            <br><br>
-
-            L<sub>v</sub> =
-            ${material.Lv} J/g
-
-            <br>
-
-            Q<sub>latente</sub>
-            = m · L<sub>v</sub>
-
-            <br>
-
-            Q<sub>latente</sub>
-            = ${m} × ${material.Lv}
-
-            <br>
-
-            <b>
-            Q<sub>latente</sub>
-            = ${Qlatent.toFixed(2)} J
-            </b>
-
+            T<sub>eb</sub> = ${m.Tb} °C<br><br>
+            L<sub>v</sub> = ${m.Lv} J/g<br>
+            Q<sub>latente</sub> = m · L<sub>v</sub><br>
+            Q<sub>latente</sub> = ${mass} × ${m.Lv}<br>
+            <b>Q<sub>latente</sub> = ${Qlatent.toFixed(2)} J</b>
         `;
 
         totalCalculation.innerHTML = `
-
-            Q<sub>total</sub> =
-            Q<sub>sensible</sub> +
-            Q<sub>latente</sub>
-
-            <br><br>
-
-            Q<sub>total</sub> =
-            ${Qheat.toFixed(2)}
-            +
-            ${Qlatent.toFixed(2)}
-
-            <br>
-
-            <b>
-            Q<sub>total</sub> =
-            ${(Qheat+Qlatent).toFixed(2)} J
-            </b>
-
+            Q<sub>total</sub> = Q<sub>sensible</sub> + Q<sub>latente</sub><br><br>
+            Q<sub>total</sub> = ${Qheat.toFixed(2)} + ${Qlatent.toFixed(2)}<br>
+            <b>Q<sub>total</sub> = ${(Qheat + Qlatent).toFixed(2)} J</b>
         `;
 
         explanationElement.innerHTML = `
-
             <b>💨 ¿Qué ocurre?</b><br><br>
-
-            Al llegar a ${material.Tb} °C,
-            la sustancia comienza a cambiar de
-            líquido a gas.
-
-            <br><br>
-
-            Durante el cambio de fase,
-            la energía suministrada se utiliza
-            principalmente para vencer las fuerzas
-            de interacción entre las partículas,
-            por eso la temperatura permanece
-            aproximadamente constante.
-
-            <br><br>
-
-            Esa energía se calcula mediante:
-
-            <br><br>
-
+            Al llegar a ${m.Tb} °C, la sustancia cambia de líquido a gas.
+            La energía se usa para vencer fuerzas intermoleculares,
+            por eso T permanece constante.<br><br>
             <b>Q = m · L<sub>v</sub></b>
-
         `;
-
     }
-
-    else if(
-        T >= material.Tf &&
-        T < material.Tb &&
-        Ti < material.Tf
-    ){
-
-        const Qfusion =
-            m *
-            material.Lf;
+    else if (T >= m.Tf && T < m.Tb && Ti < m.Tf){
+        const Qfusion = mass * m.Lf;
 
         phaseCalculation.innerHTML = `
-
             <b>Fusión:</b><br>
-
-            T<sub>f</sub> =
-            ${material.Tf} °C
-
-            <br><br>
-
-            L<sub>f</sub> =
-            ${material.Lf} J/g
-
-            <br>
-
-            Q<sub>latente</sub>
-            = m · L<sub>f</sub>
-
-            <br>
-
-            Q<sub>latente</sub>
-            = ${m} × ${material.Lf}
-
-            <br>
-
-            <b>
-            Q<sub>latente</sub>
-            = ${Qfusion.toFixed(2)} J
-            </b>
-
+            T<sub>f</sub> = ${m.Tf} °C<br><br>
+            L<sub>f</sub> = ${m.Lf} J/g<br>
+            Q<sub>latente</sub> = m · L<sub>f</sub><br>
+            Q<sub>latente</sub> = ${mass} × ${m.Lf}<br>
+            <b>Q<sub>latente</sub> = ${Qfusion.toFixed(2)} J</b>
         `;
 
         totalCalculation.innerHTML = `
-
-            Q<sub>total</sub> =
-            Q<sub>sensible</sub> +
-            Q<sub>latente</sub>
-
-            <br><br>
-
-            Q<sub>total</sub> =
-            ${Qsensible.toFixed(2)}
-            +
-            ${Qfusion.toFixed(2)}
-
+            Q<sub>total</sub> = Q<sub>sensible</sub> + Q<sub>latente</sub><br><br>
+            Q<sub>total</sub> = ${Qsensible.toFixed(2)} + ${Qfusion.toFixed(2)}
         `;
 
         explanationElement.innerHTML = `
-
             <b>🧊➡️💧 ¿Qué ocurre?</b><br><br>
-
-            La sustancia está realizando una
-            transición de sólido a líquido.
-
-            <br><br>
-
-            Durante la fusión, el calor suministrado
-            corresponde al <b>calor latente</b>:
-
-            <br><br>
-
+            Transición sólido → líquido. La temperatura permanece
+            aproximadamente constante mientras ocurre la fusión.<br><br>
             <b>Q = m · L<sub>f</sub></b>
-
-            <br><br>
-
-            La temperatura permanece aproximadamente
-            constante mientras ocurre el cambio de fase.
-
         `;
-
     }
-
-    else{
-
+    else {
         phaseCalculation.innerHTML = `
-
-            No hay cambio de fase en este momento.
-
-            <br><br>
-
-            Si la sustancia alcanza:
-
-            <br>
-
-            <b>${material.Tf} °C</b>
-            → fusión
-
-            <br>
-
-            <b>${material.Tb} °C</b>
-            → vaporización
-
+            No hay cambio de fase en este momento.<br><br>
+            Si la sustancia alcanza:<br>
+            <b>${m.Tf} °C</b> → fusión<br>
+            <b>${m.Tb} °C</b> → vaporización
         `;
 
         totalCalculation.innerHTML = `
-
-            Q<sub>sensible</sub>
-            =
-            ${Math.max(0,Qsensible).toFixed(2)} J
-
-            <br><br>
-
-            En esta etapa la energía aumenta
-            principalmente la temperatura.
-
+            Q<sub>sensible</sub> = ${Math.max(0, Qsensible).toFixed(2)} J<br><br>
+            En esta etapa la energía aumenta principalmente la temperatura.
         `;
 
         explanationElement.innerHTML = `
-
             <b>🔥 ¿Qué demuestra?</b><br><br>
-
-            En esta etapa se aplica directamente:
-
-            <br><br>
-
-            <b>Q = m · c · ΔT</b>
-
-            <br><br>
-
-            El calor específico determina cuánta
-            energía necesita la sustancia para
-            aumentar su temperatura.
-
-            <br><br>
-
-            Una sustancia con un valor de
-            <b>c</b> grande necesita más energía
-            para conseguir el mismo aumento de
-            temperatura.
-
+            Se aplica directamente: <b>Q = m · c · ΔT</b><br><br>
+            Una sustancia con <b>c</b> grande necesita más energía
+            para el mismo aumento de temperatura.
         `;
-
     }
-
 }
 
+/* ============================================================
+   GRÁFICA T vs Q
+============================================================ */
 
-/*
-=============================================================
-ACTUALIZAR INTERFAZ
-=============================================================
-*/
+/** Calcula la curva teórica de calentamiento. */
+function computeCurve(){
+    const m    = getMaterial();
+    const mass = safeNumber(massInput, 100);
+    const Ti   = safeNumber(initialTempInput, 20);
 
+    const points = [];
+    let Q = 0;
+    let T = Ti;
+
+    points.push({ Q: 0, T: T, phase: "start" });
+
+    // 1) Calentar sólido hasta fusión
+    if (Ti < m.Tf){
+        Q += mass * m.c * (m.Tf - Ti);
+        points.push({ Q: Q, T: m.Tf, phase: "solid-end" });
+
+        // 2) Meseta de fusión
+        Q += mass * m.Lf;
+        points.push({ Q: Q, T: m.Tf, phase: "fusion-end" });
+        T = m.Tf;
+    }
+
+    // 3) Calentar líquido hasta ebullición
+    const Tstart = Math.max(Ti, m.Tf);
+    if (Tstart < m.Tb){
+        Q += mass * m.c * (m.Tb - Tstart);
+        points.push({ Q: Q, T: m.Tb, phase: "liquid-end" });
+
+        // 4) Meseta de vaporización
+        Q += mass * m.Lv;
+        points.push({ Q: Q, T: m.Tb, phase: "vapor-end" });
+        T = m.Tb;
+    }
+
+    // 5) Sobrecalentamiento del gas (150 °C extra)
+    Q += mass * m.c * 150;
+    points.push({ Q: Q, T: Math.max(T, m.Tb) + 150, phase: "gas-end" });
+
+    return points;
+}
+
+function drawGraph(){
+    const ctx = graphCanvas.getContext("2d");
+    const W = graphCanvas.width;
+    const H = graphCanvas.height;
+
+    const padding = { left: 70, right: 24, top: 22, bottom: 46 };
+    const plotW = W - padding.left - padding.right;
+    const plotH = H - padding.top - padding.bottom;
+
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "#050d19";
+    ctx.fillRect(0, 0, W, H);
+
+    const points = computeCurve();
+    if (points.length < 2) return;
+
+    const maxQ  = points[points.length - 1].Q;
+    const Ti    = points[0].T;
+    const maxT  = points[points.length - 1].T;
+    const minT  = Ti;
+
+    const Tpad = (maxT - minT) * 0.05 || 5;
+    const Tlo  = minT - Tpad;
+    const Thi  = maxT + Tpad;
+
+    const toX = Q => padding.left + (Q / maxQ) * plotW;
+    const toY = T => padding.top + plotH - ((T - Tlo) / (Thi - Tlo)) * plotH;
+
+    // ---- Grid ----
+    ctx.strokeStyle = "#1a2f4a";
+    ctx.lineWidth = 1;
+
+    const gridX = 10, gridY = 6;
+    for (let i = 0; i <= gridX; i++){
+        const x = padding.left + (i / gridX) * plotW;
+        ctx.beginPath();
+        ctx.moveTo(x, padding.top);
+        ctx.lineTo(x, padding.top + plotH);
+        ctx.stroke();
+    }
+    for (let i = 0; i <= gridY; i++){
+        const y = padding.top + (i / gridY) * plotH;
+        ctx.beginPath();
+        ctx.moveTo(padding.left, y);
+        ctx.lineTo(padding.left + plotW, y);
+        ctx.stroke();
+    }
+
+    // ---- Etiquetas de ejes ----
+    ctx.fillStyle = "#8ea8c9";
+    ctx.font = "12px Arial";
+    ctx.textAlign = "center";
+
+    for (let i = 0; i <= gridX; i++){
+        const Qval = (i / gridX) * maxQ;
+        const x = padding.left + (i / gridX) * plotW;
+        const label = Qval >= 10000 ? (Qval/1000).toFixed(1)+"k" : Qval.toFixed(0);
+        ctx.fillText(label, x, padding.top + plotH + 18);
+    }
+    ctx.fillStyle = "#b9eaff";
+    ctx.font = "bold 13px Arial";
+    ctx.fillText("Q (J)", padding.left + plotW / 2, H - 8);
+
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#8ea8c9";
+    ctx.font = "12px Arial";
+    for (let i = 0; i <= gridY; i++){
+        const Tval = Tlo + (i / gridY) * (Thi - Tlo);
+        const y = padding.top + plotH - (i / gridY) * plotH;
+        ctx.fillText(Tval.toFixed(0) + "°", padding.left - 8, y + 4);
+    }
+
+    ctx.save();
+    ctx.translate(18, padding.top + plotH / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#b9eaff";
+    ctx.font = "bold 13px Arial";
+    ctx.fillText("T (°C)", 0, 0);
+    ctx.restore();
+
+    // ---- Área bajo la curva ----
+    ctx.beginPath();
+    ctx.moveTo(toX(points[0].Q), toY(points[0].T));
+    for (let i = 1; i < points.length; i++){
+        ctx.lineTo(toX(points[i].Q), toY(points[i].T));
+    }
+    ctx.lineTo(toX(points[points.length - 1].Q), toY(Tlo));
+    ctx.lineTo(toX(0), toY(Tlo));
+    ctx.closePath();
+
+    const grad = ctx.createLinearGradient(0, padding.top, 0, padding.top + plotH);
+    grad.addColorStop(0, "rgba(73,197,255,0.28)");
+    grad.addColorStop(1, "rgba(73,197,255,0.02)");
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // ---- Curva ----
+    ctx.strokeStyle = "#49c5ff";
+    ctx.lineWidth = 2.5;
+    ctx.shadowColor = "#49c5ff";
+    ctx.shadowBlur = 6;
+    ctx.beginPath();
+    ctx.moveTo(toX(points[0].Q), toY(points[0].T));
+    for (let i = 1; i < points.length; i++){
+        ctx.lineTo(toX(points[i].Q), toY(points[i].T));
+    }
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // ---- Etiquetas y marcadores de mesetas ----
+    for (let i = 1; i < points.length; i++){
+        const a = points[i - 1];
+        const b = points[i];
+
+        // Es meseta si T no cambia y Q sí
+        if (Math.abs(a.T - b.T) < 1e-6 && b.Q > a.Q){
+            const midQ = (a.Q + b.Q) / 2;
+            const x = toX(midQ);
+            const y = toY(b.T);
+
+            // Punto naranja en los extremos
+            ctx.fillStyle = "#ff8a4c";
+            ctx.beginPath();
+            ctx.arc(toX(a.Q), toY(a.T), 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(toX(b.Q), toY(b.T), 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Etiqueta
+            ctx.fillStyle = "#ff8a4c";
+            ctx.font = "bold 12px Arial";
+            ctx.textAlign = "center";
+            const label = (b.phase === "fusion-end") ? "Fusión" : "Vaporización";
+            ctx.fillText(label, x, y - 10);
+        }
+    }
+
+    // ---- Punto actual ----
+    const Qnow = Math.max(0, Math.min(totalEnergy, maxQ));
+    const Tnow = Math.max(Tlo, Math.min(currentTemp, Thi));
+    const cx = toX(Qnow);
+    const cy = toY(Tnow);
+
+    ctx.shadowColor = "#ff4a6e";
+    ctx.shadowBlur = 14;
+    ctx.fillStyle = "#ff4a6e";
+    ctx.beginPath();
+    ctx.arc(cx, cy, 7, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, 7, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Línea guía horizontal hasta el eje Y
+    ctx.strokeStyle = "rgba(255,74,110,0.35)";
+    ctx.setLineDash([4, 4]);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(padding.left, cy);
+    ctx.stroke();
+    ctx.setLineDash([]);
+}
+
+/* ============================================================
+   INTERFAZ
+============================================================ */
 function updateUI(){
+    const m    = getMaterial();
+    const mass = safeNumber(massInput, 100);
+    const Ti   = safeNumber(initialTempInput, 20);
 
-    const material =
-        getMaterial();
-
-    const m =
-        Number(massInput.value);
-
-    const Ti =
-        Number(initialTempInput.value);
-
-
-    temperatureElement.textContent =
-        currentTemp.toFixed(2) + " °C";
-
-
-    energyElement.textContent =
-        "Energía suministrada: " +
-        totalEnergy.toFixed(1) +
-        " J";
-
-
-    specificHeatElement.textContent =
-        material.c.toFixed(3);
-
-
-    massDisplay.textContent =
-        m.toFixed(1);
-
-
-    deltaTElement.textContent =
-        (currentTemp-Ti).toFixed(2);
-
-
-    qDisplay.textContent =
-        totalEnergy.toFixed(1);
-
+    temperatureElement.textContent  = currentTemp.toFixed(2) + " °C";
+    energyElement.textContent       = "Energía suministrada: " + totalEnergy.toFixed(1) + " J";
+    specificHeatElement.textContent = m.c.toFixed(3);
+    massDisplay.textContent         = mass.toFixed(1);
+    deltaTElement.textContent       = (currentTemp - Ti).toFixed(2);
+    qDisplay.textContent            = totalEnergy.toFixed(1);
 
     updatePhase();
-
     updateCalculations();
-
     updateMaterialVisual();
 
-
-    /*
-    intensidad del fuego
-    */
-
-    if(running){
-
-        flameElement.style.opacity =
-            .25 +
-            Number(powerInput.value)/7000;
-
-        flameElement.style.transform =
-            `translateX(-50%) scale(
-                ${1 + Number(powerInput.value)/6000}
-            )`;
-
-    }
-    else{
-
-        flameElement.style.opacity =
-            ".15";
-
+    // Fuego
+    if (running){
+        const p = Number(powerInput.value);
+        flameElement.style.opacity   = 0.25 + p / 7000;
+        flameElement.style.transform = `translateX(-50%) scale(${1 + p / 6000})`;
+    } else {
+        flameElement.style.opacity = "0.15";
     }
 
+    // Progreso por energía total
+    let totalNeeded = 0;
+    if (Ti < m.Tf) totalNeeded += mass * m.c * (m.Tf - Ti) + mass * m.Lf;
+    totalNeeded += mass * m.c * (m.Tb - Math.max(Ti, m.Tf)) + mass * m.Lv;
 
-    /*
-    progreso visual basado en aproximación
-    hasta el punto de ebullición
-    */
+    const pct = totalNeeded > 0
+        ? Math.max(0, Math.min(100, (totalEnergy / totalNeeded) * 100))
+        : 0;
+    progressElement.style.width = pct + "%";
 
-    const range =
-        material.Tb - Ti;
-
-    let percentage =
-        ((currentTemp-Ti)/range)*100;
-
-    percentage =
-        Math.max(
-            0,
-            Math.min(100,percentage)
-        );
-
-
-    progressElement.style.width =
-        percentage + "%";
-
+    // Gráfica
+    drawGraph();
 }
 
-
-/*
-=============================================================
-SIMULACIÓN FÍSICA
-=============================================================
-
-IMPORTANTE:
-
-No permitimos que la temperatura simplemente atraviese
-el punto de cambio de fase.
-
-Cuando llega a Tf o Tb:
-
-la temperatura se mantiene constante
-mientras se consume energía en Q = mL.
-
-Después continúa aumentando.
-*/
-
+/* ============================================================
+   SIMULACIÓN FÍSICA
+============================================================ */
 function simulate(time){
+    if (!running){ lastTime = null; return; }
 
-    if(!running){
-
-        lastTime = null;
-
-        return;
-
-    }
-
-
-    if(!lastTime){
-
-        lastTime = time;
-
-    }
-
-
-    const seconds =
-        (time-lastTime)/1000;
-
+    if (!lastTime) lastTime = time;
+    const seconds = (time - lastTime) / 1000;
     lastTime = time;
 
+    const m     = getMaterial();
+    const mass  = safeNumber(massInput, 100);
+    const power = Number(powerInput.value);
+    const speed = Number(speedInput.value);
 
-    const material =
-        getMaterial();
+    const incomingEnergy = power * seconds * speed;
+    let remainingEnergy  = incomingEnergy;
 
-    const m =
-        Number(massInput.value);
+    while (remainingEnergy > 0.0001){
 
-    const power =
-        Number(powerInput.value);
-
-    const simulationSpeed =
-        Number(speedInput.value);
-
-
-    /*
-    energía entregada durante este frame
-    */
-
-    const incomingEnergy =
-        power *
-        seconds *
-        simulationSpeed;
-
-
-    let remainingEnergy =
-        incomingEnergy;
-
-
-    /*
-    ---------------------------------------------------------
-    CALENTAMIENTO / CAMBIOS DE FASE
-    ---------------------------------------------------------
-    */
-
-    while(remainingEnergy > 0.0001){
-
-        /*
-        CASO 1: por debajo del punto de fusión
-        */
-
-        if(currentTemp < material.Tf){
-
-            const energyToMelt =
-                m *
-                material.c *
-                (material.Tf-currentTemp);
-
-
-            const energyUsed =
-                Math.min(
-                    remainingEnergy,
-                    energyToMelt
-                );
-
-
-            currentTemp +=
-                energyUsed /
-                (m*material.c);
-
-
-            remainingEnergy -=
-                energyUsed;
-
-
+        // 1) Sólido → Tf
+        if (currentTemp < m.Tf && !inMelting){
+            const needed = mass * m.c * (m.Tf - currentTemp);
+            const used   = Math.min(remainingEnergy, needed);
+            currentTemp += used / (mass * m.c);
+            remainingEnergy -= used;
+            if (currentTemp >= m.Tf - 1e-6){
+                currentTemp = m.Tf;
+                inMelting = true;
+            }
         }
-
-
-        /*
-        CASO 2: fusión
-        */
-
-        else if(
-            currentTemp >= material.Tf &&
-            currentTemp < material.Tf + 0.0001
-        ){
-
-            /*
-            Para simplificar visualmente:
-            si queda energía para fundir,
-            la usamos primero.
-            */
-
-            const fusionEnergy =
-                m *
-                material.Lf;
-
-
-            /*
-            Se registra usando una propiedad
-            de estado.
-            */
-
-            if(
-                !window.fusionEnergyUsed
-            ){
-
-                window.fusionEnergyUsed = 0;
-
+        // 2) Fusión (T constante)
+        else if (inMelting){
+            const totalFusion = mass * m.Lf;
+            const used = Math.min(remainingEnergy, totalFusion - fusionEnergyUsed);
+            fusionEnergyUsed += used;
+            remainingEnergy  -= used;
+            if (fusionEnergyUsed >= totalFusion - 1e-6){
+                inMelting = false;
+                fusionEnergyUsed = totalFusion;
+                currentTemp = m.Tf + 1e-4;
             }
-
-
-            const remainingFusion =
-                fusionEnergy -
-                window.fusionEnergyUsed;
-
-
-            if(remainingFusion > 0){
-
-                const used =
-                    Math.min(
-                        remainingEnergy,
-                        remainingFusion
-                    );
-
-
-                window.fusionEnergyUsed +=
-                    used;
-
-                remainingEnergy -=
-                    used;
-
-
-                /*
-                La temperatura permanece constante
-                */
-
-                currentTemp =
-                    material.Tf;
-
-            }
-            else{
-
-                currentTemp =
-                    material.Tf + 0.001;
-
-            }
-
         }
-
-
-        /*
-        CASO 3: calentamiento del líquido
-        */
-
-        else if(currentTemp < material.Tb){
-
-            const energyToBoil =
-                m *
-                material.c *
-                (material.Tb-currentTemp);
-
-
-            const used =
-                Math.min(
-                    remainingEnergy,
-                    energyToBoil
-                );
-
-
-            currentTemp +=
-                used /
-                (m*material.c);
-
-
-            remainingEnergy -=
-                used;
-
+        // 3) Líquido → Tb
+        else if (currentTemp < m.Tb && !inBoiling){
+            const needed = mass * m.c * (m.Tb - currentTemp);
+            const used   = Math.min(remainingEnergy, needed);
+            currentTemp += used / (mass * m.c);
+            remainingEnergy -= used;
+            if (currentTemp >= m.Tb - 1e-6){
+                currentTemp = m.Tb;
+                inBoiling = true;
+            }
         }
+        // 4) Vaporización (T constante)
+        else if (inBoiling){
+            const totalVapor = mass * m.Lv;
+            const used = Math.min(remainingEnergy, totalVapor - vaporEnergyUsed);
+            vaporEnergyUsed += used;
+            remainingEnergy -= used;
 
-
-        /*
-        CASO 4: vaporización
-        */
-
-        else{
-
-            if(
-                !window.vaporEnergyUsed
-            ){
-
-                window.vaporEnergyUsed = 0;
-
+            if (materialSelect.value === "water" && Math.random() < 0.55){
+                createVapor();
             }
 
-
-            const vaporEnergy =
-                m *
-                material.Lv;
-
-
-            const remainingVapor =
-                vaporEnergy -
-                window.vaporEnergyUsed;
-
-
-            if(remainingVapor > 0){
-
-                const used =
-                    Math.min(
-                        remainingEnergy,
-                        remainingVapor
-                    );
-
-
-                window.vaporEnergyUsed +=
-                    used;
-
-                remainingEnergy -=
-                    used;
-
-
-                currentTemp =
-                    material.Tb;
-
-
-                /*
-                vapor visible
-                */
-
-                if(
-                    materialSelect.value === "water" &&
-                    Math.random()<.55
-                ){
-
-                    createVapor();
-
-                }
-
+            if (vaporEnergyUsed >= totalVapor - 1e-6){
+                inBoiling = false;
+                vaporEnergyUsed = totalVapor;
+                currentTemp = m.Tb + 1e-4;
             }
-            else{
-
-                /*
-                Después de vaporizar toda la masa,
-                el gas puede seguir aumentando
-                de temperatura.
-
-                Para hacerlo sencillo usamos
-                el mismo c como aproximación.
-                */
-
-                currentTemp +=
-                    remainingEnergy /
-                    (m*material.c);
-
-                remainingEnergy = 0;
-
-            }
-
         }
-
+        // 5) Gas sobrecalentado
+        else {
+            currentTemp += remainingEnergy / (mass * m.c);
+            remainingEnergy = 0;
+        }
     }
 
-
-    totalEnergy +=
-        incomingEnergy;
-
+    totalEnergy += incomingEnergy;
 
     updateParticles();
-
     updateUI();
-
     requestAnimationFrame(simulate);
-
 }
 
-
-/*
-=============================================================
-BOTONES
-=============================================================
-*/
-
-document
-.getElementById("start")
-.addEventListener(
-    "click",
-    ()=>{
-
-        if(!running){
-
-            running = true;
-
-            requestAnimationFrame(
-                simulate
-            );
-
-        }
-
-    }
-);
-
-
-document
-.getElementById("pause")
-.addEventListener(
-    "click",
-    ()=>{
-
-        running = false;
-
-    }
-);
-
-
-document
-.getElementById("reset")
-.addEventListener(
-    "click",
-    ()=>{
-
-        running = false;
-
+/* ============================================================
+   BOTONES
+============================================================ */
+document.getElementById("start").addEventListener("click", () => {
+    if (!running){
+        running = true;
         lastTime = null;
+        requestAnimationFrame(simulate);
+    }
+});
 
-        totalEnergy = 0;
+document.getElementById("pause").addEventListener("click", () => {
+    running = false;
+});
 
-        currentTemp =
-            Number(initialTempInput.value);
+document.getElementById("reset").addEventListener("click", () => {
+    resetState();
+    createParticles();
+    updateUI();
+});
 
-        window.fusionEnergyUsed = 0;
+/* ============================================================
+   CONTROLES
+============================================================ */
+powerInput.addEventListener("input", () => {
+    document.getElementById("powerValue").textContent = powerInput.value;
+});
 
-        window.vaporEnergyUsed = 0;
+speedInput.addEventListener("input", () => {
+    document.getElementById("speedValue").textContent = speedInput.value;
+});
 
-        vaporsElement.innerHTML = "";
+materialSelect.addEventListener("change", () => {
+    resetState();
+    createParticles();
+    updateMaterialVisual();
+    updateUI();
+});
 
+initialTempInput.addEventListener("change", () => {
+    if (!running){
+        resetState();
         updateUI();
-
     }
-);
+});
 
-
-/*
-=============================================================
-CONTROLES
-=============================================================
-*/
-
-powerInput.addEventListener(
-    "input",
-    ()=>{
-
-        document
-        .getElementById("powerValue")
-        .textContent =
-            powerInput.value;
-
-    }
-);
-
-
-speedInput.addEventListener(
-    "input",
-    ()=>{
-
-        document
-        .getElementById("speedValue")
-        .textContent =
-            speedInput.value;
-
-    }
-);
-
-
-materialSelect.addEventListener(
-    "change",
-    ()=>{
-
-        running = false;
-
-        totalEnergy = 0;
-
-        lastTime = null;
-
-        window.fusionEnergyUsed = 0;
-
-        window.vaporEnergyUsed = 0;
-
-        currentTemp =
-            Number(initialTempInput.value);
-
-        vaporsElement.innerHTML = "";
-
+massInput.addEventListener("change", () => {
+    if (!running){
+        resetState();
         updateUI();
-
-        createParticles();
-
     }
-);
+});
 
-
-initialTempInput.addEventListener(
-    "input",
-    ()=>{
-
-        if(!running){
-
-            currentTemp =
-                Number(initialTempInput.value);
-
-            totalEnergy = 0;
-
-            window.fusionEnergyUsed = 0;
-
-            window.vaporEnergyUsed = 0;
-
-            updateUI();
-
-        }
-
-    }
-);
-
-
-massInput.addEventListener(
-    "input",
-    ()=>{
-
-        if(!running){
-
-            updateUI();
-
-        }
-
-    }
-);
-
-
-/*
-=============================================================
-TABLA DE PROPIEDADES
-=============================================================
-*/
-
+/* ============================================================
+   TABLA
+============================================================ */
 function createTable(){
-
-    const table =
-        document.getElementById(
-            "tableBody"
-        );
-
+    const table = document.getElementById("tableBody");
     table.innerHTML = "";
-
-
-    Object.values(materials)
-    .forEach(material=>{
-
-        const row =
-            document.createElement("tr");
-
+    Object.values(materials).forEach(m => {
+        const row = document.createElement("tr");
         row.innerHTML = `
-
-            <td>${material.name}</td>
-
-            <td>
-                ${material.c}
-            </td>
-
-            <td>
-                ${material.Tf} °C
-            </td>
-
-            <td>
-                ${material.Lf} J/g
-            </td>
-
-            <td>
-                ${material.Tb} °C
-            </td>
-
-            <td>
-                ${material.Lv} J/g
-            </td>
-
+            <td>${m.name}</td>
+            <td>${m.c}</td>
+            <td>${m.Tf} °C</td>
+            <td>${m.Lf} J/g</td>
+            <td>${m.Tb} °C</td>
+            <td>${m.Lv} J/g</td>
         `;
-
         table.appendChild(row);
-
     });
-
 }
 
-
-/*
-=============================================================
-INICIALIZAR
-=============================================================
-*/
-
+/* ============================================================
+   INIT
+============================================================ */
 createTable();
-
 createParticles();
-
 updateMaterialVisual();
-
 updateUI();
 
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
