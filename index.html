@@ -1,256 +1,1134 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TermoLab Virtual - Simulador de Calor Específico</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    canvas { background: #0f172a; border-radius: 0.75rem; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ThermoLab — Calor Específico</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0b1020;
+    color: #f5f7ff;
+}
+
+header {
+    padding: 22px;
+    text-align: center;
+    background: linear-gradient(135deg, #111936, #182653);
+    border-bottom: 1px solid #2b3b67;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #aeb9d8;
+}
+
+.container {
+    width: min(1200px, 94%);
+    margin: 25px auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 330px 1fr;
+    gap: 20px;
+}
+
+.card {
+    background: #11182d;
+    border: 1px solid #28365e;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,.2);
+}
+
+h2, h3 {
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    margin-top: 16px;
+    margin-bottom: 7px;
+    color: #b9c4df;
+    font-size: 14px;
+}
+
+select,
+input[type="number"] {
+    width: 100%;
+    padding: 11px;
+    border-radius: 9px;
+    border: 1px solid #35446d;
+    background: #0b1123;
+    color: white;
+    font-size: 15px;
+}
+
+input[type="range"] {
+    width: 100%;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.primary {
+    background: #4f8cff;
+    color: white;
+}
+
+.secondary {
+    background: #253352;
+    color: white;
+}
+
+.danger {
+    background: #8f3347;
+    color: white;
+}
+
+.formula {
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 12px;
+    background: #091021;
+    text-align: center;
+    font-size: 21px;
+    color: #8fc4ff;
+}
+
+.stage {
+    position: relative;
+    height: 520px;
+    overflow: hidden;
+    border-radius: 18px;
+    background:
+        radial-gradient(circle at 50% 35%, #25345c 0%, #11182d 48%, #080d1b 100%);
+}
+
+.status {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 20;
+    padding: 9px 13px;
+    border-radius: 20px;
+    background: rgba(0,0,0,.45);
+    border: 1px solid #35446d;
+    font-size: 14px;
+}
+
+.temperature {
+    position: absolute;
+    top: 55px;
+    left: 15px;
+    z-index: 20;
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.energy {
+    position: absolute;
+    top: 95px;
+    left: 15px;
+    z-index: 20;
+    color: #b8c5e3;
+}
+
+.beaker {
+    position: absolute;
+    width: 310px;
+    height: 300px;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid rgba(190,220,255,.55);
+    border-top: 0;
+    border-radius: 0 0 35px 35px;
+    overflow: hidden;
+    background: rgba(120,180,255,.08);
+}
+
+.liquid {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 75%;
+    background: rgba(58,157,255,.42);
+    transition: background .5s;
+}
+
+.liquid::before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    left: 0;
+    right: 0;
+    height: 15px;
+    background: rgba(130,210,255,.55);
+    border-radius: 50%;
+}
+
+.particle {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #d9f4ff;
+    box-shadow: 0 0 10px rgba(170,220,255,.8);
+}
+
+.hotplate {
+    position: absolute;
+    bottom: 58px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 355px;
+    height: 30px;
+    border-radius: 50%;
+    background: #282f42;
+    border: 3px solid #58627b;
+}
+
+.flame {
+    position: absolute;
+    bottom: 88px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 45px;
+    opacity: .15;
+    transition: opacity .5s, transform .5s;
+    filter: drop-shadow(0 0 15px #ff8a00);
+}
+
+.vapor {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(235,245,255,.55);
+    filter: blur(1px);
+    animation: steam 3s linear infinite;
+    opacity: 0;
+}
+
+@keyframes steam {
+    0% {
+        transform: translateY(0) translateX(0) scale(.6);
+        opacity: 0;
+    }
+    20% {
+        opacity: .7;
+    }
+    100% {
+        transform: translateY(-180px) translateX(var(--drift)) scale(1.7);
+        opacity: 0;
+    }
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.metric {
+    padding: 15px;
+    border-radius: 12px;
+    background: #0b1123;
+    border: 1px solid #28365e;
+}
+
+.metric small {
+    display: block;
+    color: #9ba9cb;
+    margin-bottom: 7px;
+}
+
+.metric strong {
+    font-size: 20px;
+}
+
+.progress {
+    margin-top: 15px;
+    height: 14px;
+    border-radius: 10px;
+    background: #080d1b;
+    overflow: hidden;
+}
+
+.progressBar {
+    height: 100%;
+    width: 0%;
+    background: #4f8cff;
+    transition: width .2s;
+}
+
+.info {
+    margin-top: 20px;
+    line-height: 1.6;
+    color: #c4cce0;
+}
+
+.comparison {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 11px;
+    border-bottom: 1px solid #28365e;
+    text-align: left;
+}
+
+th {
+    color: #9fb2db;
+}
+
+@media(max-width: 850px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .metrics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen p-4 md:p-8 font-sans">
-  <div class="max-w-6xl mx-auto space-y-6">
-    
-    <header class="text-center border-b border-slate-700 pb-4">
-      <h1 class="text-3xl font-extrabold text-cyan-400">TermoLab Virtual: Calor Específico y Cambio de Fase</h1>
-      <p class="text-slate-400 text-sm mt-1">Análisis cinético-molecular y conversiones energéticas</p>
-    </header>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      
-      <!-- Panel de Controles -->
-      <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 space-y-4">
-        <h2 class="text-xl font-bold text-slate-200 border-b border-slate-700 pb-2">Parámetros del Sistema</h2>
-        
-        <div>
-          <label class="block text-sm font-medium mb-1 text-slate-300">Sustancia</label>
-          <select id="material" class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-cyan-300">
-            <option value="agua">Agua (c = 1.00 cal/g°C)</option>
-            <option value="aluminio">Aluminio (c = 0.215 cal/g°C)</option>
-            <option value="cobre">Cobre (c = 0.092 cal/g°C)</option>
-            <option value="hierro">Hierro (c = 0.107 cal/g°C)</option>
-            <option value="oro">Oro (c = 0.031 cal/g°C)</option>
-            <option value="alcohol">Alcohol Etílico (c = 0.58 cal/g°C)</option>
-            <option value="plomo">Plomo (c = 0.031 cal/g°C)</option>
-          </select>
+<body>
+
+<header>
+    <h1>🌡️ ThermoLab</h1>
+    <p>Simulador interactivo de calor específico y cambios de fase</p>
+</header>
+
+<div class="container">
+
+<div class="grid">
+
+    <!-- CONTROLES -->
+    <div class="card">
+
+        <h2>⚙️ Configuración</h2>
+
+        <label>Sustancia</label>
+        <select id="material">
+            <option value="water">Agua</option>
+            <option value="aluminum">Aluminio</option>
+            <option value="copper">Cobre</option>
+            <option value="iron">Hierro</option>
+            <option value="gold">Oro</option>
+            <option value="lead">Plomo</option>
+            <option value="ethanol">Etanol</option>
+        </select>
+
+        <label>Masa (g)</label>
+        <input id="mass" type="number" value="100" min="1" max="5000">
+
+        <label>Temperatura inicial (°C)</label>
+        <input id="initialTemp" type="number" value="20" min="-100" max="1000">
+
+        <label>Potencia de calentamiento</label>
+        <input id="power" type="range" min="100" max="5000" value="1000">
+        <div id="powerValue">1000 J/s</div>
+
+        <label>Velocidad de simulación</label>
+        <input id="speed" type="range" min="0.1" max="5" step="0.1" value="1">
+        <div id="speedValue">1x</div>
+
+        <button class="primary" id="start">🔥 Iniciar calentamiento</button>
+        <button class="secondary" id="pause">⏸ Pausar</button>
+        <button class="danger" id="reset">↺ Reiniciar</button>
+
+        <div class="formula">
+            Q = m · c · ΔT
         </div>
-
-        <div>
-          <label class="block text-sm font-medium mb-1 text-slate-300">Masa (m)</label>
-          <div class="flex gap-2">
-            <input type="number" id="masa" value="100" min="1" class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-slate-100">
-            <select id="unidadMasa" class="bg-slate-900 border border-slate-600 rounded p-2">
-              <option value="g">g</option>
-              <option value="kg">kg</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium mb-1 text-slate-300">Temperatura Inicial (Ti)</label>
-          <div class="flex gap-2">
-            <input type="number" id="tempIni" value="-10" class="w-full bg-slate-900 border border-slate-600 rounded p-2">
-            <span class="p-2 bg-slate-700 rounded text-sm flex items-center">°C</span>
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium mb-1 text-slate-300">Temperatura Final (Tf)</label>
-          <div class="flex gap-2">
-            <input type="number" id="tempFin" value="110" class="w-full bg-slate-900 border border-slate-600 rounded p-2">
-            <span class="p-2 bg-slate-700 rounded text-sm flex items-center">°C</span>
-          </div>
-        </div>
-
-        <button onclick="calcular()" class="w-full bg-cyan-600 hover:bg-cyan-500 font-bold py-2.5 rounded-lg transition">
-          Calcular y Simular
-        </button>
-      </div>
-
-      <!-- Área Visual: Animación Molecular Canvas -->
-      <div class="lg:col-span-2 bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col justify-between">
-        <div>
-          <div class="flex justify-between items-center mb-2">
-            <h2 class="text-xl font-bold text-slate-200">Simulación Cinético-Molecular</h2>
-            <span id="estadoFase" class="px-3 py-1 bg-cyan-950 text-cyan-400 border border-cyan-800 rounded-full text-xs font-semibold">
-              Fase: Sólido
-            </span>
-          </div>
-          <canvas id="simCanvas" width="600" height="280" class="w-full h-64"></canvas>
-        </div>
-
-        <!-- Termómetro y Control de Simulación -->
-        <div class="mt-4 bg-slate-900 p-3 rounded-lg flex items-center justify-between">
-          <span class="text-sm text-slate-400">Temperatura Térmica en Vivo:</span>
-          <span id="tempActualDisplay" class="text-2xl font-mono font-bold text-amber-400">0.0 °C</span>
-        </div>
-      </div>
 
     </div>
 
-    <!-- Resultados y Conversiones Instantáneas -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      
-      <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 space-y-3">
-        <h3 class="text-lg font-bold text-slate-200 border-b border-slate-700 pb-2">Resultados Termodinámicos</h3>
-        <div class="flex justify-between text-sm">
-          <span class="text-slate-400">Calor Sensible (Qs):</span>
-          <span id="resQs" class="font-mono text-cyan-300">0 cal</span>
-        </div>
-        <div class="flex justify-between text-sm">
-          <span class="text-slate-400">Calor Latente (Ql):</span>
-          <span id="resQl" class="font-mono text-cyan-300">0 cal</span>
-        </div>
-        <div class="flex justify-between text-base font-bold border-t border-slate-700 pt-2">
-          <span>Calor Total (QT):</span>
-          <span id="resQt" class="font-mono text-amber-400">0 cal</span>
-        </div>
-      </div>
 
-      <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 space-y-3">
-        <h3 class="text-lg font-bold text-slate-200 border-b border-slate-700 pb-2">Tabla de Conversiones Automáticas</h3>
-        <div class="grid grid-cols-2 gap-2 text-sm">
-          <div class="bg-slate-900 p-2 rounded">
-            <span class="text-xs text-slate-500 block">Energía en Joules (J)</span>
-            <span id="convJ" class="font-mono text-emerald-400">0 J</span>
-          </div>
-          <div class="bg-slate-900 p-2 rounded">
-            <span class="text-xs text-slate-500 block">Energía en Kilocalorías (kcal)</span>
-            <span id="convKcal" class="font-mono text-emerald-400">0 kcal</span>
-          </div>
-          <div class="bg-slate-900 p-2 rounded">
-            <span class="text-xs text-slate-500 block">Masa en Kilogramos (kg)</span>
-            <span id="convKg" class="font-mono text-purple-400">0 kg</span>
-          </div>
-          <div class="bg-slate-900 p-2 rounded">
-            <span class="text-xs text-slate-500 block">Delta de Temperatura (ΔT)</span>
-            <span id="convDeltaT" class="font-mono text-purple-400">0 °C / 0 K</span>
-          </div>
+    <!-- SIMULACIÓN -->
+    <div class="card">
+
+        <div class="stage" id="stage">
+
+            <div class="status" id="phase">
+                Estado: líquido
+            </div>
+
+            <div class="temperature" id="temperature">
+                20.0 °C
+            </div>
+
+            <div class="energy" id="energy">
+                Energía: 0 J
+            </div>
+
+            <div class="beaker">
+                <div class="liquid" id="liquid"></div>
+                <div id="particles"></div>
+            </div>
+
+            <div class="flame" id="flame">🔥</div>
+
+            <div class="hotplate"></div>
+
+            <div id="vapors"></div>
+
         </div>
-      </div>
+
+        <div class="metrics">
+
+            <div class="metric">
+                <small>Calor específico</small>
+                <strong id="specificHeat">4.186</strong>
+                <small>J/g·°C</small>
+            </div>
+
+            <div class="metric">
+                <small>Masa</small>
+                <strong id="massDisplay">100</strong>
+                <small>g</small>
+            </div>
+
+            <div class="metric">
+                <small>ΔT</small>
+                <strong id="deltaT">0</strong>
+                <small>°C</small>
+            </div>
+
+            <div class="metric">
+                <small>Energía Q</small>
+                <strong id="qDisplay">0</strong>
+                <small>J</small>
+            </div>
+
+        </div>
+
+        <div class="progress">
+            <div class="progressBar" id="progress"></div>
+        </div>
 
     </div>
 
-  </div>
+</div>
 
-  <script>
-    const DB = {
-      agua:     { cSol: 0.5, cLiq: 1.0, cGas: 0.48, tf: 0, tv: 100, lf: 80, lv: 540 },
-      aluminio: { cSol: 0.215, cLiq: 0.25, cGas: 0.3, tf: 660, tv: 2519, lf: 95, lv: 2500 },
-      cobre:    { cSol: 0.092, cLiq: 0.10, cGas: 0.12, tf: 1085, tv: 2562, lf: 50, lv: 1150 },
-      hierro:   { cSol: 0.107, cLiq: 0.12, cGas: 0.15, tf: 1538, tv: 2862, lf: 65, lv: 1500 },
-      oro:      { cSol: 0.031, cLiq: 0.035, cGas: 0.035, tf: 1064, tv: 2700, lf: 15.3, lv: 377 },
-      alcohol:  { cSol: 0.23, cLiq: 0.58, cGas: 0.34, tf: -114, tv: 78, lf: 25, lv: 204 },
-      plomo:    { cSol: 0.031, cLiq: 0.033, cGas: 0.033, tf: 327, tv: 1749, lf: 5.5, lv: 207 }
-    };
 
-    let particles = [];
-    const canvas = document.getElementById('simCanvas');
-    const ctx = canvas.getContext('2d');
-    let currentTemp = 0;
+<!-- INFORMACIÓN -->
+<div class="card info">
 
-    function initParticles() {
-      particles = [];
-      for(let i = 0; i < 60; i++) {
-        particles.push({
-          x: Math.random() * (canvas.width - 40) + 20,
-          y: Math.random() * (canvas.height - 40) + 20,
-          vx: (Math.random() - 0.5),
-          vy: (Math.random() - 0.5),
-          baseX: 50 + (i % 10) * 50,
-          baseY: 40 + Math.floor(i / 10) * 40
-        });
-      }
+    <h2>🧠 ¿Qué está demostrando la simulación?</h2>
+
+    <p>
+        El simulador utiliza la ecuación:
+    </p>
+
+    <div class="formula">
+        Q = m · c · ΔT
+    </div>
+
+    <p>
+        Esta ecuación indica que la cantidad de calor necesaria para cambiar
+        la temperatura depende de la masa, del calor específico de la sustancia
+        y del cambio de temperatura.
+    </p>
+
+    <p>
+        Si dos sustancias tienen la misma masa y reciben la misma cantidad
+        de energía, sus temperaturas pueden aumentar de manera diferente
+        porque poseen diferentes calores específicos.
+    </p>
+
+    <p>
+        En el caso del agua, al alcanzar aproximadamente <b>100 °C</b>
+        a presión atmosférica, comienza la ebullición y la simulación
+        representa visualmente el escape de moléculas como vapor.
+    </p>
+
+</div>
+
+
+<!-- COMPARACIÓN -->
+<div class="card comparison">
+
+    <h2>📊 Comparación de materiales</h2>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Sustancia</th>
+                <th>Calor específico</th>
+                <th>Unidad</th>
+                <th>Interpretación</th>
+            </tr>
+        </thead>
+
+        <tbody id="comparisonTable"></tbody>
+
+    </table>
+
+</div>
+
+</div>
+
+
+<script>
+
+const materials = {
+
+    water: {
+        name: "Agua",
+        c: 4.186,
+        melting: 0,
+        boiling: 100,
+        color: "rgba(58,157,255,.42)"
+    },
+
+    aluminum: {
+        name: "Aluminio",
+        c: 0.900,
+        melting: 660,
+        boiling: 2470,
+        color: "rgba(170,180,195,.48)"
+    },
+
+    copper: {
+        name: "Cobre",
+        c: 0.385,
+        melting: 1085,
+        boiling: 2562,
+        color: "rgba(190,110,70,.5)"
+    },
+
+    iron: {
+        name: "Hierro",
+        c: 0.449,
+        melting: 1538,
+        boiling: 2862,
+        color: "rgba(130,140,155,.5)"
+    },
+
+    gold: {
+        name: "Oro",
+        c: 0.129,
+        melting: 1064,
+        boiling: 2856,
+        color: "rgba(220,180,50,.5)"
+    },
+
+    lead: {
+        name: "Plomo",
+        c: 0.128,
+        melting: 327.5,
+        boiling: 1749,
+        color: "rgba(120,125,140,.5)"
+    },
+
+    ethanol: {
+        name: "Etanol",
+        c: 2.44,
+        melting: -114,
+        boiling: 78.4,
+        color: "rgba(170,230,255,.38)"
+    }
+};
+
+
+let running = false;
+let currentTemp = 20;
+let energy = 0;
+let lastTime = null;
+
+const material = document.getElementById("material");
+const mass = document.getElementById("mass");
+const initialTemp = document.getElementById("initialTemp");
+const power = document.getElementById("power");
+const speed = document.getElementById("speed");
+
+const temperature = document.getElementById("temperature");
+const energyDisplay = document.getElementById("energy");
+const phase = document.getElementById("phase");
+
+const specificHeat = document.getElementById("specificHeat");
+const massDisplay = document.getElementById("massDisplay");
+const deltaT = document.getElementById("deltaT");
+const qDisplay = document.getElementById("qDisplay");
+
+const progress = document.getElementById("progress");
+const liquid = document.getElementById("liquid");
+const flame = document.getElementById("flame");
+
+const particlesContainer = document.getElementById("particles");
+const vaporsContainer = document.getElementById("vapors");
+
+
+function getMaterial() {
+    return materials[material.value];
+}
+
+
+function updateUI() {
+
+    const m = getMaterial();
+
+    temperature.textContent = currentTemp.toFixed(1) + " °C";
+    energyDisplay.textContent = "Energía: " + Math.round(energy) + " J";
+
+    specificHeat.textContent = m.c;
+    massDisplay.textContent = mass.value;
+
+    const dt = currentTemp - Number(initialTemp.value);
+
+    deltaT.textContent = dt.toFixed(1);
+    qDisplay.textContent = Math.round(energy);
+
+    liquid.style.background = m.color;
+
+    updatePhase();
+
+    updateParticles();
+
+    updateFlame();
+
+}
+
+
+function updatePhase() {
+
+    const m = getMaterial();
+
+    let state = "";
+
+    if (currentTemp < m.melting) {
+        state = "🧊 Estado: sólido";
+    }
+    else if (currentTemp < m.boiling) {
+        state = "💧 Estado: líquido";
+    }
+    else {
+        state = "💨 Estado: gas / ebullición";
     }
 
-    function renderSimulation(temp, matKey) {
-      const mat = DB[matKey];
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      let phase = 'Sólido';
+    phase.textContent = state;
 
-      if (temp >= mat.tv) {
-        phase = 'Gaseoso';
-      } else if (temp >= mat.tf) {
-        phase = 'Líquido';
-      }
+    let percentage = 0;
 
-      document.getElementById('estadoFase').innerText = `Fase: ${phase}`;
-      document.getElementById('tempActualDisplay').innerText = `${temp.toFixed(1)} °C`;
+    if (m.boiling > m.melting) {
 
-      particles.forEach(p => {
-        ctx.beginPath();
-        if (phase === 'Sólido') {
-          p.x = p.baseX + (Math.random() - 0.5) * (temp < 0 ? 2 : 5);
-          p.y = p.baseY + (Math.random() - 0.5) * (temp < 0 ? 2 : 5);
-          ctx.fillStyle = '#38bdf8';
-        } else if (phase === 'Líquido') {
-          p.x += p.vx * 2;
-          p.y += p.vy * 2;
-          if(p.x < 10 || p.x > canvas.width - 10) p.vx *= -1;
-          if(p.y < 10 || p.y > canvas.height - 10) p.vy *= -1;
-          ctx.fillStyle = '#fbbf24';
-        } else {
-          p.x += p.vx * 6;
-          p.y += p.vy * 6;
-          if(p.x < 10 || p.x > canvas.width - 10) p.vx *= -1;
-          if(p.y < 10 || p.y > canvas.height - 10) p.vy *= -1;
-          ctx.fillStyle = '#f87171';
-        }
-        ctx.arc(p.x, p.y, 7, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.closePath();
-      });
+        percentage =
+            ((currentTemp - m.melting) /
+            (m.boiling - m.melting)) * 100;
+
     }
 
-    function calcular() {
-      const matKey = document.getElementById('material').value;
-      const mat = DB[matKey];
-      let m = parseFloat(document.getElementById('masa').value);
-      if (document.getElementById('unidadMasa').value === 'kg') m *= 1000;
+    percentage = Math.max(0, Math.min(100, percentage));
 
-      const Ti = parseFloat(document.getElementById('tempIni').value);
-      const Tf = parseFloat(document.getElementById('tempFin').value);
+    progress.style.width = percentage + "%";
 
-      let Qs = 0;
-      let Ql = 0;
+}
 
-      let cEfectivo = mat.cLiq;
-      if (Tf < mat.tf) cEfectivo = mat.cSol;
-      else if (Ti > mat.tv) cEfectivo = mat.cGas;
 
-      Qs = m * cEfectivo * Math.abs(Tf - Ti);
+function updateParticles() {
 
-      if (Ti < mat.tf && Tf >= mat.tf) Ql += m * mat.lf;
-      if (Ti < mat.tv && Tf >= mat.tv) Ql += m * mat.lv;
+    particlesContainer.innerHTML = "";
 
-      const Qt = Qs + Ql;
-      const joules = Qt * 4.184;
+    const m = getMaterial();
 
-      document.getElementById('resQs').innerText = `${Qs.toFixed(1)} cal`;
-      document.getElementById('resQl').innerText = `${Ql.toFixed(1)} cal`;
-      document.getElementById('resQt').innerText = `${Qt.toFixed(1)} cal`;
+    let count = 28;
 
-      document.getElementById('convJ').innerText = `${joules.toFixed(1)} J`;
-      document.getElementById('convKcal').innerText = `${(Qt / 1000).toFixed(3)} kcal`;
-      document.getElementById('convKg').innerText = `${(m / 1000).toFixed(3)} kg`;
-      document.getElementById('convDeltaT').innerText = `${Math.abs(Tf - Ti)} °C / ${Math.abs(Tf - Ti)} K`;
-
-      currentTemp = Ti;
-      const step = (Tf - Ti) / 100;
-      let count = 0;
-
-      const interval = setInterval(() => {
-        currentTemp += step;
-        renderSimulation(currentTemp, matKey);
-        count++;
-        if (count >= 100) clearInterval(interval);
-      }, 30);
+    if (currentTemp > m.boiling) {
+        count = 18;
     }
 
-    initParticles();
-    calcular();
-  </script>
+    for (let i = 0; i < count; i++) {
+
+        const p = document.createElement("div");
+
+        p.className = "particle";
+
+        const x = Math.random() * 280 + 10;
+        const y = Math.random() * 210 + 55;
+
+        p.style.left = x + "px";
+        p.style.top = y + "px";
+
+        const movement =
+            Math.max(0.5, Math.min(5,
+            Math.abs(currentTemp) / 40));
+
+        p.animate(
+            [
+                {
+                    transform: "translate(0,0)"
+                },
+                {
+                    transform:
+                    `translate(${(Math.random()-.5)*movement*20}px,
+                    ${(Math.random()-.5)*movement*20}px)`
+                }
+            ],
+            {
+                duration: 800 / movement,
+                iterations: Infinity,
+                direction: "alternate"
+            }
+        );
+
+        particlesContainer.appendChild(p);
+    }
+
+}
+
+
+function updateFlame() {
+
+    if (!running) {
+        flame.style.opacity = ".15";
+        return;
+    }
+
+    const p = Number(power.value);
+
+    flame.style.opacity =
+        Math.min(.95, .2 + p / 5000);
+
+    flame.style.transform =
+        `translateX(-50%) scale(${1 + p / 5000})`;
+}
+
+
+function createVapor() {
+
+    const v = document.createElement("div");
+
+    v.className = "vapor";
+
+    v.style.left =
+        (48 + Math.random() * 18) + "%";
+
+    v.style.bottom =
+        (185 + Math.random() * 20) + "px";
+
+    v.style.setProperty(
+        "--drift",
+        ((Math.random()-.5)*100) + "px"
+    );
+
+    v.style.animationDuration =
+        (2.3 + Math.random()*1.8) + "s";
+
+    vaporsContainer.appendChild(v);
+
+    requestAnimationFrame(() => {
+        v.style.opacity = ".7";
+    });
+
+    setTimeout(() => {
+        v.remove();
+    }, 4500);
+}
+
+
+function simulation(time) {
+
+    if (!running) {
+        lastTime = null;
+        return;
+    }
+
+    if (!lastTime) {
+        lastTime = time;
+    }
+
+    const dt = (time - lastTime) / 1000;
+    lastTime = time;
+
+    const m = getMaterial();
+    const kgMass = Number(mass.value);
+
+    const actualPower =
+        Number(power.value);
+
+    /*
+       Q = P × t
+
+       ΔT = Q / (m × c)
+
+       Como usamos gramos y J/g°C:
+       ΔT = Q / (m × c)
+    */
+
+    const addedEnergy =
+        actualPower * dt *
+        Number(speed.value);
+
+    energy += addedEnergy;
+
+    const deltaTemperature =
+        addedEnergy /
+        (kgMass * m.c);
+
+    currentTemp += deltaTemperature;
+
+    /*
+       Limitamos la temperatura para evitar
+       valores absurdamente altos en la demostración.
+    */
+
+    if (currentTemp > 3000) {
+        currentTemp = 3000;
+    }
+
+    /*
+       Vapor visible cuando el agua alcanza
+       la temperatura de ebullición.
+    */
+
+    if (
+        currentTemp >= m.boiling &&
+        material.value === "water" &&
+        Math.random() < .35
+    ) {
+        createVapor();
+    }
+
+    updateUI();
+
+    requestAnimationFrame(simulation);
+}
+
+
+document.getElementById("start").addEventListener("click", () => {
+
+    running = true;
+
+    if (!lastTime) {
+        lastTime = performance.now();
+    }
+
+    requestAnimationFrame(simulation);
+
+});
+
+
+document.getElementById("pause").addEventListener("click", () => {
+
+    running = false;
+
+});
+
+
+document.getElementById("reset").addEventListener("click", () => {
+
+    running = false;
+
+    currentTemp =
+        Number(initialTemp.value);
+
+    energy = 0;
+
+    vaporsContainer.innerHTML = "";
+
+    updateUI();
+
+});
+
+
+material.addEventListener("change", () => {
+
+    updateUI();
+
+});
+
+
+initialTemp.addEventListener("input", () => {
+
+    if (!running) {
+        currentTemp =
+            Number(initialTemp.value);
+    }
+
+    updateUI();
+
+});
+
+
+mass.addEventListener("input", updateUI);
+
+
+power.addEventListener("input", () => {
+
+    document.getElementById("powerValue").textContent =
+        power.value + " J/s";
+
+});
+
+
+speed.addEventListener("input", () => {
+
+    document.getElementById("speedValue").textContent =
+        speed.value + "x";
+
+});
+
+
+function buildComparison() {
+
+    const table =
+        document.getElementById("comparisonTable");
+
+    table.innerHTML = "";
+
+    Object.values(materials).forEach(m => {
+
+        const tr =
+            document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${m.name}</td>
+            <td>${m.c}</td>
+            <td>J/g·°C</td>
+            <td>
+                ${m.c > 2
+                    ? "Necesita mucha energía para aumentar su temperatura."
+                    : "Su temperatura aumenta más rápidamente con la misma energía."
+                }
+            </td>
+        `;
+
+        table.appendChild(tr);
+
+    });
+
+}
+
+
+buildComparison();
+
+currentTemp =
+    Number(initialTemp.value);
+
+updateUI();
+
+</script>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
