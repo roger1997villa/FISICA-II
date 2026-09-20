@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TermoLab Virtual - Simulador de Calor Específico</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    canvas { background: #0f172a; border-radius: 0.75rem; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-4 md:p-8 font-sans">
+  <div class="max-w-6xl mx-auto space-y-6">
+    
+    <header class="text-center border-b border-slate-700 pb-4">
+      <h1 class="text-3xl font-extrabold text-cyan-400">TermoLab Virtual: Calor Específico y Cambio de Fase</h1>
+      <p class="text-slate-400 text-sm mt-1">Análisis cinético-molecular y conversiones energéticas</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Panel de Controles -->
+      <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 space-y-4">
+        <h2 class="text-xl font-bold text-slate-200 border-b border-slate-700 pb-2">Parámetros del Sistema</h2>
+        
+        <div>
+          <label class="block text-sm font-medium mb-1 text-slate-300">Sustancia</label>
+          <select id="material" class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-cyan-300">
+            <option value="agua">Agua (c = 1.00 cal/g°C)</option>
+            <option value="aluminio">Aluminio (c = 0.215 cal/g°C)</option>
+            <option value="cobre">Cobre (c = 0.092 cal/g°C)</option>
+            <option value="hierro">Hierro (c = 0.107 cal/g°C)</option>
+            <option value="oro">Oro (c = 0.031 cal/g°C)</option>
+            <option value="alcohol">Alcohol Etílico (c = 0.58 cal/g°C)</option>
+            <option value="plomo">Plomo (c = 0.031 cal/g°C)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-1 text-slate-300">Masa (m)</label>
+          <div class="flex gap-2">
+            <input type="number" id="masa" value="100" min="1" class="w-full bg-slate-900 border border-slate-600 rounded p-2 text-slate-100">
+            <select id="unidadMasa" class="bg-slate-900 border border-slate-600 rounded p-2">
+              <option value="g">g</option>
+              <option value="kg">kg</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-1 text-slate-300">Temperatura Inicial (Ti)</label>
+          <div class="flex gap-2">
+            <input type="number" id="tempIni" value="-10" class="w-full bg-slate-900 border border-slate-600 rounded p-2">
+            <span class="p-2 bg-slate-700 rounded text-sm flex items-center">°C</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-1 text-slate-300">Temperatura Final (Tf)</label>
+          <div class="flex gap-2">
+            <input type="number" id="tempFin" value="110" class="w-full bg-slate-900 border border-slate-600 rounded p-2">
+            <span class="p-2 bg-slate-700 rounded text-sm flex items-center">°C</span>
+          </div>
+        </div>
+
+        <button onclick="calcular()" class="w-full bg-cyan-600 hover:bg-cyan-500 font-bold py-2.5 rounded-lg transition">
+          Calcular y Simular
+        </button>
+      </div>
+
+      <!-- Área Visual: Animación Molecular Canvas -->
+      <div class="lg:col-span-2 bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <h2 class="text-xl font-bold text-slate-200">Simulación Cinético-Molecular</h2>
+            <span id="estadoFase" class="px-3 py-1 bg-cyan-950 text-cyan-400 border border-cyan-800 rounded-full text-xs font-semibold">
+              Fase: Sólido
+            </span>
+          </div>
+          <canvas id="simCanvas" width="600" height="280" class="w-full h-64"></canvas>
+        </div>
+
+        <!-- Termómetro y Control de Simulación -->
+        <div class="mt-4 bg-slate-900 p-3 rounded-lg flex items-center justify-between">
+          <span class="text-sm text-slate-400">Temperatura Térmica en Vivo:</span>
+          <span id="tempActualDisplay" class="text-2xl font-mono font-bold text-amber-400">0.0 °C</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Resultados y Conversiones Instantáneas -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 space-y-3">
+        <h3 class="text-lg font-bold text-slate-200 border-b border-slate-700 pb-2">Resultados Termodinámicos</h3>
+        <div class="flex justify-between text-sm">
+          <span class="text-slate-400">Calor Sensible (Qs):</span>
+          <span id="resQs" class="font-mono text-cyan-300">0 cal</span>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span class="text-slate-400">Calor Latente (Ql):</span>
+          <span id="resQl" class="font-mono text-cyan-300">0 cal</span>
+        </div>
+        <div class="flex justify-between text-base font-bold border-t border-slate-700 pt-2">
+          <span>Calor Total (QT):</span>
+          <span id="resQt" class="font-mono text-amber-400">0 cal</span>
+        </div>
+      </div>
+
+      <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 space-y-3">
+        <h3 class="text-lg font-bold text-slate-200 border-b border-slate-700 pb-2">Tabla de Conversiones Automáticas</h3>
+        <div class="grid grid-cols-2 gap-2 text-sm">
+          <div class="bg-slate-900 p-2 rounded">
+            <span class="text-xs text-slate-500 block">Energía en Joules (J)</span>
+            <span id="convJ" class="font-mono text-emerald-400">0 J</span>
+          </div>
+          <div class="bg-slate-900 p-2 rounded">
+            <span class="text-xs text-slate-500 block">Energía en Kilocalorías (kcal)</span>
+            <span id="convKcal" class="font-mono text-emerald-400">0 kcal</span>
+          </div>
+          <div class="bg-slate-900 p-2 rounded">
+            <span class="text-xs text-slate-500 block">Masa en Kilogramos (kg)</span>
+            <span id="convKg" class="font-mono text-purple-400">0 kg</span>
+          </div>
+          <div class="bg-slate-900 p-2 rounded">
+            <span class="text-xs text-slate-500 block">Delta de Temperatura (ΔT)</span>
+            <span id="convDeltaT" class="font-mono text-purple-400">0 °C / 0 K</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const DB = {
+      agua:     { cSol: 0.5, cLiq: 1.0, cGas: 0.48, tf: 0, tv: 100, lf: 80, lv: 540 },
+      aluminio: { cSol: 0.215, cLiq: 0.25, cGas: 0.3, tf: 660, tv: 2519, lf: 95, lv: 2500 },
+      cobre:    { cSol: 0.092, cLiq: 0.10, cGas: 0.12, tf: 1085, tv: 2562, lf: 50, lv: 1150 },
+      hierro:   { cSol: 0.107, cLiq: 0.12, cGas: 0.15, tf: 1538, tv: 2862, lf: 65, lv: 1500 },
+      oro:      { cSol: 0.031, cLiq: 0.035, cGas: 0.035, tf: 1064, tv: 2700, lf: 15.3, lv: 377 },
+      alcohol:  { cSol: 0.23, cLiq: 0.58, cGas: 0.34, tf: -114, tv: 78, lf: 25, lv: 204 },
+      plomo:    { cSol: 0.031, cLiq: 0.033, cGas: 0.033, tf: 327, tv: 1749, lf: 5.5, lv: 207 }
+    };
+
+    let particles = [];
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    let currentTemp = 0;
+
+    function initParticles() {
+      particles = [];
+      for(let i = 0; i < 60; i++) {
+        particles.push({
+          x: Math.random() * (canvas.width - 40) + 20,
+          y: Math.random() * (canvas.height - 40) + 20,
+          vx: (Math.random() - 0.5),
+          vy: (Math.random() - 0.5),
+          baseX: 50 + (i % 10) * 50,
+          baseY: 40 + Math.floor(i / 10) * 40
+        });
+      }
+    }
+
+    function renderSimulation(temp, matKey) {
+      const mat = DB[matKey];
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      let phase = 'Sólido';
+
+      if (temp >= mat.tv) {
+        phase = 'Gaseoso';
+      } else if (temp >= mat.tf) {
+        phase = 'Líquido';
+      }
+
+      document.getElementById('estadoFase').innerText = `Fase: ${phase}`;
+      document.getElementById('tempActualDisplay').innerText = `${temp.toFixed(1)} °C`;
+
+      particles.forEach(p => {
+        ctx.beginPath();
+        if (phase === 'Sólido') {
+          p.x = p.baseX + (Math.random() - 0.5) * (temp < 0 ? 2 : 5);
+          p.y = p.baseY + (Math.random() - 0.5) * (temp < 0 ? 2 : 5);
+          ctx.fillStyle = '#38bdf8';
+        } else if (phase === 'Líquido') {
+          p.x += p.vx * 2;
+          p.y += p.vy * 2;
+          if(p.x < 10 || p.x > canvas.width - 10) p.vx *= -1;
+          if(p.y < 10 || p.y > canvas.height - 10) p.vy *= -1;
+          ctx.fillStyle = '#fbbf24';
+        } else {
+          p.x += p.vx * 6;
+          p.y += p.vy * 6;
+          if(p.x < 10 || p.x > canvas.width - 10) p.vx *= -1;
+          if(p.y < 10 || p.y > canvas.height - 10) p.vy *= -1;
+          ctx.fillStyle = '#f87171';
+        }
+        ctx.arc(p.x, p.y, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+      });
+    }
+
+    function calcular() {
+      const matKey = document.getElementById('material').value;
+      const mat = DB[matKey];
+      let m = parseFloat(document.getElementById('masa').value);
+      if (document.getElementById('unidadMasa').value === 'kg') m *= 1000;
+
+      const Ti = parseFloat(document.getElementById('tempIni').value);
+      const Tf = parseFloat(document.getElementById('tempFin').value);
+
+      let Qs = 0;
+      let Ql = 0;
+
+      let cEfectivo = mat.cLiq;
+      if (Tf < mat.tf) cEfectivo = mat.cSol;
+      else if (Ti > mat.tv) cEfectivo = mat.cGas;
+
+      Qs = m * cEfectivo * Math.abs(Tf - Ti);
+
+      if (Ti < mat.tf && Tf >= mat.tf) Ql += m * mat.lf;
+      if (Ti < mat.tv && Tf >= mat.tv) Ql += m * mat.lv;
+
+      const Qt = Qs + Ql;
+      const joules = Qt * 4.184;
+
+      document.getElementById('resQs').innerText = `${Qs.toFixed(1)} cal`;
+      document.getElementById('resQl').innerText = `${Ql.toFixed(1)} cal`;
+      document.getElementById('resQt').innerText = `${Qt.toFixed(1)} cal`;
+
+      document.getElementById('convJ').innerText = `${joules.toFixed(1)} J`;
+      document.getElementById('convKcal').innerText = `${(Qt / 1000).toFixed(3)} kcal`;
+      document.getElementById('convKg').innerText = `${(m / 1000).toFixed(3)} kg`;
+      document.getElementById('convDeltaT').innerText = `${Math.abs(Tf - Ti)} °C / ${Math.abs(Tf - Ti)} K`;
+
+      currentTemp = Ti;
+      const step = (Tf - Ti) / 100;
+      let count = 0;
+
+      const interval = setInterval(() => {
+        currentTemp += step;
+        renderSimulation(currentTemp, matKey);
+        count++;
+        if (count >= 100) clearInterval(interval);
+      }, 30);
+    }
+
+    initParticles();
+    calcular();
+  </script>
+</body>
+</html>
