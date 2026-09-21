@@ -66,9 +66,7 @@ body{
     box-shadow:0 0 14px rgba(170,90,255,.18) inset;
 }
 
-.temp-clock.kelvin .clock-title{
-    color:#c39ff0;
-}
+.temp-clock.kelvin .clock-title{ color:#c39ff0; }
 
 .temp-status{
     display:flex;
@@ -99,14 +97,8 @@ header{
 
 .logo{ display:flex; align-items:center; gap:14px; }
 .logo-icon{ font-size:42px; }
-
 h1{ margin:0; font-size:32px; }
-
 header p{ margin:5px 0 0; color:#9eb6d8; }
-
-/* ==================================================
-   LAYOUT
-================================================== */
 
 .layout{
     width:96%;
@@ -146,16 +138,8 @@ input[type="number"]{
     font-size:15px;
 }
 
-.input-row{
-    display:flex;
-    gap:8px;
-    align-items:stretch;
-}
-
-.input-row input{
-    flex:1;
-    min-width:0;
-}
+.input-row{ display:flex; gap:8px; align-items:stretch; }
+.input-row input{ flex:1; min-width:0; }
 
 .unit-select{
     width:86px !important;
@@ -212,11 +196,7 @@ button{
     text-align:center;
 }
 
-.formula{
-    font-size:24px;
-    color:#49c5ff;
-    font-weight:bold;
-}
+.formula{ font-size:24px; color:#49c5ff; font-weight:bold; }
 
 .formula-small{
     margin-top:8px;
@@ -268,6 +248,8 @@ button{
     color:#9db4d4;
 }
 
+/* ================= RECIPIENTE ================= */
+
 .beaker{
     position:absolute;
     left:50%;
@@ -282,16 +264,32 @@ button{
     overflow:hidden;
 }
 
+.beaker.crucible{
+    border-color:rgba(140,110,80,.7);
+    border-top-color:rgba(200,160,110,.85);
+    background:rgba(60,40,20,.08);
+    box-shadow:inset 0 0 40px rgba(255,120,40,.10);
+}
+
+/* ---- Agua líquida (nivel animado por JS) ---- */
 .water{
     position:absolute;
     left:0; right:0; bottom:0;
-    height:74%;
+    height:0%;
     background:linear-gradient(
         to bottom,
-        rgba(49,174,255,.55),
-        rgba(16,83,158,.68)
+        rgba(49,174,255,.6),
+        rgba(16,83,158,.75)
     );
-    transition:.4s;
+    transition:height .35s ease, background .6s ease;
+}
+
+.water.ethanol{
+    background:linear-gradient(
+        to bottom,
+        rgba(190,235,255,.55),
+        rgba(80,150,200,.7)
+    );
 }
 
 .water-surface{
@@ -305,53 +303,183 @@ button{
     box-shadow:0 0 20px rgba(57,189,255,.5);
 }
 
+/* ---- Cubo de hielo ---- */
+.ice-cube{
+    position:absolute;
+    left:50%;
+    bottom:10px;
+    transform:translateX(-50%) scale(1);
+    transform-origin:bottom center;
+    width:170px;
+    height:135px;
+    border-radius:14px;
+    background:linear-gradient(
+        145deg,
+        #ffffff 0%,
+        #d5eeff 25%,
+        #9ed2ff 55%,
+        #d8efff 100%
+    );
+    border:2px solid rgba(240,250,255,.95);
+    box-shadow:
+        inset -12px -12px 25px rgba(90,150,210,.45),
+        inset 10px 10px 25px rgba(255,255,255,.7),
+        0 0 30px rgba(150,215,255,.4);
+    transition:transform .35s ease, opacity .35s ease;
+    opacity:1;
+}
+
+.ice-cube::before{
+    content:"";
+    position:absolute;
+    top:12%; left:16%;
+    width:38%; height:45%;
+    background:rgba(255,255,255,.75);
+    border-radius:60% 40% 50% 40%;
+    filter:blur(5px);
+    transform:rotate(-18deg);
+}
+
+.ice-cube::after{
+    content:"";
+    position:absolute;
+    bottom:14%; right:14%;
+    width:22%; height:20%;
+    background:rgba(255,255,255,.45);
+    border-radius:50%;
+    filter:blur(3px);
+}
+
+/* ---- Piscina de metal fundido ---- */
+.molten-pool{
+    position:absolute;
+    left:50%;
+    bottom:6px;
+    transform:translateX(-50%);
+    width:280px;
+    height:0px;
+    border-radius:50% / 22% 22% 0 0;
+    background:radial-gradient(
+        ellipse at 50% 30%,
+        #ffd79a 0%,
+        #ff8a3c 35%,
+        #b83f0c 75%,
+        #5c1600 100%
+    );
+    box-shadow:
+        0 0 45px rgba(255,140,60,.75),
+        inset 0 6px 30px rgba(255,230,150,.55);
+    transition:height .35s ease, opacity .35s ease;
+    opacity:0;
+}
+
+.molten-pool.aluminum{
+    background:radial-gradient(ellipse at 50% 30%, #ffffff, #d5dfe9 40%, #7e8b99 80%, #3d4856 100%);
+    box-shadow:0 0 45px rgba(220,235,255,.7), inset 0 6px 30px rgba(255,255,255,.7);
+}
+.molten-pool.copper{
+    background:radial-gradient(ellipse at 50% 30%, #ffe0bb, #e07a3a 40%, #8c2a08 80%, #3d0e00 100%);
+}
+.molten-pool.iron{
+    background:radial-gradient(ellipse at 50% 30%, #ffd9a4, #e08a2a 40%, #7a2b04 80%, #2e0d00 100%);
+}
+.molten-pool.gold{
+    background:radial-gradient(ellipse at 50% 30%, #fffbd4, #ffd43a 40%, #a87d00 80%, #4d3800 100%);
+}
+.molten-pool.lead{
+    background:radial-gradient(ellipse at 50% 30%, #eef3fa, #aab3c1 40%, #5a616d 80%, #262a31 100%);
+    box-shadow:0 0 35px rgba(200,220,245,.5), inset 0 6px 30px rgba(255,255,255,.5);
+}
+
+/* ---- Pieza metálica sólida ---- */
 .material-object{
     position:absolute;
     z-index:10;
     left:50%;
-    bottom:28px;
-    transform:translateX(-50%);
-    width:145px;
-    height:90px;
+    bottom:20px;
+    transform:translateX(-50%) scale(1);
+    transform-origin:bottom center;
+    width:150px;
+    height:95px;
     border-radius:12px;
-    transition:.5s;
+    transition:transform .35s ease, opacity .35s ease;
+    opacity:1;
 }
 
 .aluminum{
     background:linear-gradient(145deg,#dce3eb,#7f8995,#e9eef2);
     border:2px solid #f5f8fb;
-    box-shadow:inset -15px -12px 25px rgba(0,0,0,.3),0 0 20px rgba(220,230,240,.25);
+    box-shadow:inset -15px -12px 25px rgba(0,0,0,.3), 0 0 20px rgba(220,230,240,.25);
 }
-
 .copper{
     background:linear-gradient(145deg,#e09a68,#9a4b29,#d27748);
     border:2px solid #f1ad80;
 }
-
 .iron{
     background:linear-gradient(145deg,#9ba4af,#414b57,#747e88);
     border:2px solid #b9c2ca;
 }
-
 .gold{
     background:linear-gradient(145deg,#fff09b,#d4a72c,#fff2a4);
     border:2px solid #fff5bb;
 }
-
 .lead{
     background:linear-gradient(145deg,#9298a3,#4e5661,#858d98);
     border:2px solid #aeb5bf;
 }
 
-.ethanol{
-    width:190px;
-    height:95px;
-    border-radius:50%;
-    background:rgba(184,232,255,.3);
-    border:2px solid rgba(215,246,255,.8);
+.material-object.glow{
+    box-shadow:
+        inset -15px -12px 25px rgba(0,0,0,.3),
+        0 0 40px rgba(255,140,60,.9),
+        0 0 80px rgba(255,80,20,.5);
 }
 
-.water-object{ display:none; }
+/* ---- Partículas ---- */
+.particle{
+    position:absolute;
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#d9f5ff;
+    box-shadow:0 0 9px #bcecff;
+}
+
+/* ---- Burbujas de ebullición ---- */
+.bubble{
+    position:absolute;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(180,225,255,.4));
+    border:1px solid rgba(220,240,255,.85);
+    pointer-events:none;
+    animation:bubbleRise 1.8s linear forwards;
+}
+
+@keyframes bubbleRise{
+    0%{ transform:translateY(0) scale(.6); opacity:0; }
+    20%{ opacity:.9; }
+    100%{ transform:translateY(-200px) scale(1.2); opacity:0; }
+}
+
+/* ---- Vapor ---- */
+.vapor{
+    position:absolute;
+    z-index:30;
+    width:15px;
+    height:15px;
+    border-radius:50%;
+    background:rgba(240,250,255,.7);
+    filter:blur(1.8px);
+    animation:vaporUp 4s linear forwards;
+}
+
+@keyframes vaporUp{
+    0%{ opacity:0; transform:translate(0,0) scale(.5); }
+    20%{ opacity:.85; }
+    100%{ opacity:0; transform:translate(var(--drift),-230px) scale(2.2); }
+}
+
+/* ---- Cocina / placa ---- */
 
 .hotplate{
     position:absolute;
@@ -377,34 +505,7 @@ button{
     transition:.3s;
 }
 
-.particle{
-    position:absolute;
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:#d9f5ff;
-    box-shadow:0 0 9px #bcecff;
-}
-
-.vapor{
-    position:absolute;
-    z-index:30;
-    width:15px;
-    height:15px;
-    border-radius:50%;
-    background:rgba(240,250,255,.65);
-    filter:blur(1.5px);
-    animation:vaporUp 4s linear forwards;
-}
-
-@keyframes vaporUp{
-    0%{ opacity:0; transform:translate(0,0) scale(.5); }
-    20%{ opacity:.75; }
-    100%{
-        opacity:0;
-        transform:translate(var(--drift),-230px) scale(2);
-    }
-}
+/* ---- Métricas ---- */
 
 .metrics{
     display:grid;
@@ -446,7 +547,7 @@ button{
     transition:.2s;
 }
 
-/* ---------------- ECUACIONES ---------------- */
+/* ---- Ecuaciones ---- */
 
 .equation-card{
     background:#0c172b;
@@ -496,7 +597,7 @@ button{
     font-size:14px;
 }
 
-/* ---------------- CONVERSIÓN UNIVERSAL ---------------- */
+/* ---- Conversión ---- */
 
 .conv-box{
     padding:14px;
@@ -507,19 +608,11 @@ button{
     position:relative;
 }
 
-.conv-box.flash{
-    animation:flashConv .55s ease-out;
-}
+.conv-box.flash{ animation:flashConv .55s ease-out; }
 
 @keyframes flashConv{
-    0%{
-        box-shadow:0 0 0 0 rgba(73,197,255,.65);
-        border-color:#49c5ff;
-    }
-    100%{
-        box-shadow:0 0 0 18px rgba(73,197,255,0);
-        border-color:#1d416b;
-    }
+    0%{ box-shadow:0 0 0 0 rgba(73,197,255,.65); border-color:#49c5ff; }
+    100%{ box-shadow:0 0 0 18px rgba(73,197,255,0); border-color:#1d416b; }
 }
 
 .conv-row{
@@ -555,22 +648,15 @@ button{
     border:1px solid #1d3c66;
 }
 
-/* ---------------- TABLA ---------------- */
+/* ---- Tabla ---- */
 
 .table-card{ grid-column:1 / -1; }
-
 table{ width:100%; border-collapse:collapse; }
-
-th,td{
-    padding:11px;
-    text-align:left;
-    border-bottom:1px solid #21446f;
-}
-
+th,td{ padding:11px; text-align:left; border-bottom:1px solid #21446f; }
 th{ color:#73cfff; }
 td{ color:#d0dbee; }
 
-/* ---------------- CAMBIO DE FASE ---------------- */
+/* ---- Fase ---- */
 
 .phase-bar{
     display:grid;
@@ -590,10 +676,9 @@ td{ color:#d0dbee; }
 .phase-item.active{ background:#126da5; color:white; }
 .phase-item.change{ background:#7b4d1e; color:white; }
 
-/* ---------------- GRÁFICA ---------------- */
+/* ---- Gráfica ---- */
 
 .graph-card{ grid-column:1 / -1; }
-
 .graph-card h2{ margin-top:0; }
 
 .graph-wrapper{
@@ -633,7 +718,7 @@ td{ color:#d0dbee; }
 .dot-current{ background:#ff4a6e; }
 .dot-plateau{ background:#ff8a4c; }
 
-/* ---------------- RESPONSIVE ---------------- */
+/* ---- Responsive ---- */
 
 @media(max-width:1150px){
     .layout{ grid-template-columns:280px 1fr; }
@@ -654,20 +739,15 @@ td{ color:#d0dbee; }
 <body>
 
 <!-- ============================================================
-     BARRA STICKY: RELOJES DE TEMPERATURA
+     RELOJES DE TEMPERATURA
 ============================================================ -->
 <div class="temp-clocks-strip">
 
-    <!-- Reloj de temperatura en °C -->
     <div class="temp-clock">
         <div class="clock-title">Temperatura · Celsius</div>
         <svg class="dial" viewBox="0 0 140 140">
-            <!-- Fondo -->
             <circle cx="70" cy="70" r="58" fill="#03101f" stroke="#234a7c" stroke-width="2"/>
-            <!-- Arco de escala -->
-            <path d="M 30 108 A 50 50 0 1 1 110 108"
-                  fill="none" stroke="#1c3a63" stroke-width="6" stroke-linecap="round"/>
-            <!-- Marcas -->
+            <path d="M 30 108 A 50 50 0 1 1 110 108" fill="none" stroke="#1c3a63" stroke-width="6" stroke-linecap="round"/>
             <g stroke="#4a7bb0" stroke-width="2" stroke-linecap="round">
                 <line x1="70" y1="16" x2="70" y2="24"/>
                 <line x1="30" y1="42" x2="37" y2="47"/>
@@ -677,29 +757,20 @@ td{ color:#d0dbee; }
                 <line x1="30" y1="108" x2="37" y2="103"/>
                 <line x1="110" y1="108" x2="103" y2="103"/>
             </g>
-            <!-- Aguja -->
             <g id="needleC" transform="rotate(0 70 70)">
-                <line x1="70" y1="70" x2="70" y2="26"
-                      stroke="#49c5ff" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="70" y1="70" x2="70" y2="26" stroke="#49c5ff" stroke-width="3.5" stroke-linecap="round"/>
             </g>
             <circle cx="70" cy="70" r="7" fill="#0c172b" stroke="#49c5ff" stroke-width="2"/>
-            <!-- Lectura digital -->
-            <text x="70" y="100" text-anchor="middle"
-                  fill="#ffffff" font-size="17" font-weight="bold"
-                  font-family="Arial" id="clockValueC">20.0</text>
-            <text x="70" y="118" text-anchor="middle"
-                  fill="#49c5ff" font-size="12" font-weight="bold"
-                  font-family="Arial">°C</text>
+            <text x="70" y="100" text-anchor="middle" fill="#ffffff" font-size="17" font-weight="bold" font-family="Arial" id="clockValueC">20.0</text>
+            <text x="70" y="118" text-anchor="middle" fill="#49c5ff" font-size="12" font-weight="bold" font-family="Arial">°C</text>
         </svg>
     </div>
 
-    <!-- Reloj de temperatura en Kelvin -->
     <div class="temp-clock kelvin">
         <div class="clock-title">Temperatura · Kelvin (SI)</div>
         <svg class="dial" viewBox="0 0 140 140">
             <circle cx="70" cy="70" r="58" fill="#03101f" stroke="#5c2f8a" stroke-width="2"/>
-            <path d="M 30 108 A 50 50 0 1 1 110 108"
-                  fill="none" stroke="#3a1c5c" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 30 108 A 50 50 0 1 1 110 108" fill="none" stroke="#3a1c5c" stroke-width="6" stroke-linecap="round"/>
             <g stroke="#7c5cae" stroke-width="2" stroke-linecap="round">
                 <line x1="70" y1="16" x2="70" y2="24"/>
                 <line x1="30" y1="42" x2="37" y2="47"/>
@@ -710,16 +781,11 @@ td{ color:#d0dbee; }
                 <line x1="110" y1="108" x2="103" y2="103"/>
             </g>
             <g id="needleK" transform="rotate(0 70 70)">
-                <line x1="70" y1="70" x2="70" y2="26"
-                      stroke="#c39ff0" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="70" y1="70" x2="70" y2="26" stroke="#c39ff0" stroke-width="3.5" stroke-linecap="round"/>
             </g>
             <circle cx="70" cy="70" r="7" fill="#0c172b" stroke="#c39ff0" stroke-width="2"/>
-            <text x="70" y="100" text-anchor="middle"
-                  fill="#ffffff" font-size="15" font-weight="bold"
-                  font-family="Arial" id="clockValueK">293.15</text>
-            <text x="70" y="118" text-anchor="middle"
-                  fill="#c39ff0" font-size="12" font-weight="bold"
-                  font-family="Arial">K</text>
+            <text x="70" y="100" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold" font-family="Arial" id="clockValueK">293.15</text>
+            <text x="70" y="118" text-anchor="middle" fill="#c39ff0" font-size="12" font-weight="bold" font-family="Arial">K</text>
         </svg>
     </div>
 
@@ -828,12 +894,22 @@ td{ color:#d0dbee; }
             <div class="temp" id="temperature">20.0 °C</div>
             <div class="energy" id="energy">Energía suministrada: 0 J</div>
 
-            <div class="beaker">
+            <div class="beaker" id="beaker">
+
                 <div class="water" id="water">
                     <div class="water-surface"></div>
                 </div>
+
+                <div class="ice-cube" id="iceCube"></div>
+
+                <div class="molten-pool" id="moltenPool"></div>
+
+                <div id="bubbles"></div>
+
                 <div id="particles"></div>
+
                 <div id="materialObject" class="material-object"></div>
+
             </div>
 
             <div class="flame" id="flame">🔥</div>
@@ -880,13 +956,12 @@ td{ color:#d0dbee; }
     </section>
 
     <!-- =====================================================
-         ECUACIONES + CONVERSIÓN UNIVERSAL
+         ECUACIONES + CONVERSIÓN
     ====================================================== -->
     <section class="equation-card">
 
         <h2>🧮 Ecuaciones y unidades universales</h2>
 
-        <!-- CONVERSOR A SI -->
         <div class="eq-section">
             <div class="eq-title">🔄 0. Conversión a unidades universales (SI)</div>
 
@@ -921,21 +996,18 @@ td{ color:#d0dbee; }
             </div>
         </div>
 
-        <!-- CALOR ESPECÍFICO -->
         <div class="eq-section">
             <div class="eq-title">🔥 1. Calor específico</div>
             <div class="eq">Q = m · c · ΔT</div>
             <div class="calculation" id="specificCalculation"></div>
         </div>
 
-        <!-- CAMBIO DE FASE -->
         <div class="eq-section">
             <div class="eq-title">🧊➡️💧➡️💨 2. Cambio de fase</div>
             <div class="eq">Q = m · L</div>
             <div class="calculation" id="phaseCalculation"></div>
         </div>
 
-        <!-- CALOR TOTAL -->
         <div class="eq-section">
             <div class="eq-title">📐 3. Calor total</div>
             <div class="eq">
@@ -1044,13 +1116,15 @@ function celsiusToTemp(c, unit){
 let running          = false;
 let lastTime         = null;
 let totalEnergy      = 0;
-let currentTemp      = 20; // siempre en °C internamente
+let currentTemp      = 20;
 
 let fusionEnergyUsed = 0;
 let vaporEnergyUsed  = 0;
 
 let inMelting        = false;
 let inBoiling        = false;
+
+let bubbleTimer      = 0;
 
 /* ============================================================
    ELEMENTOS
@@ -1068,9 +1142,13 @@ const temperatureElement  = document.getElementById("temperature");
 const energyElement       = document.getElementById("energy");
 const statusElement       = document.getElementById("status");
 
+const beakerElement       = document.getElementById("beaker");
 const objectElement       = document.getElementById("materialObject");
 const waterElement        = document.getElementById("water");
+const iceCubeElement      = document.getElementById("iceCube");
+const moltenPoolElement   = document.getElementById("moltenPool");
 const particlesElement    = document.getElementById("particles");
+const bubblesElement      = document.getElementById("bubbles");
 const vaporsElement       = document.getElementById("vapors");
 const flameElement        = document.getElementById("flame");
 
@@ -1087,7 +1165,6 @@ const explanationElement  = document.getElementById("explanation");
 
 const graphCanvas         = document.getElementById("graph");
 
-// Relojes de temperatura
 const needleC        = document.getElementById("needleC");
 const needleK        = document.getElementById("needleK");
 const clockValueC    = document.getElementById("clockValueC");
@@ -1095,7 +1172,6 @@ const clockValueK    = document.getElementById("clockValueK");
 const deltaClock     = document.getElementById("deltaClock");
 const deltaClockK    = document.getElementById("deltaClockK");
 
-// Conversión
 const convBox             = document.getElementById("convBox");
 const convMassIn          = document.getElementById("convMassIn");
 const convMassOut         = document.getElementById("convMassOut");
@@ -1107,9 +1183,7 @@ const convPowerOut        = document.getElementById("convPowerOut");
 /* ============================================================
    HELPERS
 ============================================================ */
-function getMaterial(){
-    return materials[materialSelect.value];
-}
+function getMaterial(){ return materials[materialSelect.value]; }
 
 function safeNumber(input, fallback){
     if (input.value === "") return fallback;
@@ -1117,28 +1191,16 @@ function safeNumber(input, fallback){
     return Number.isFinite(v) ? v : fallback;
 }
 
-function getMassRaw(){
-    return safeNumber(massInput, 100);
-}
-function getMassGrams(){
-    return getMassRaw() * UNIT_FACTORS.mass[massUnitSelect.value];
-}
-function getMassKg(){
-    return getMassGrams() / 1000;
-}
+function getMassRaw(){ return safeNumber(massInput, 100); }
+function getMassGrams(){ return getMassRaw() * UNIT_FACTORS.mass[massUnitSelect.value]; }
+function getMassKg(){ return getMassGrams() / 1000; }
+function getTempRaw(){ return safeNumber(initialTempInput, 20); }
+function getTempCelsius(){ return tempToCelsius(getTempRaw(), tempUnitSelect.value); }
+function getPowerRaw(){ return Number(powerInput.value); }
+function getPowerWatts(){ return getPowerRaw() * UNIT_FACTORS.power[powerUnitSelect.value]; }
 
-function getTempRaw(){
-    return safeNumber(initialTempInput, 20);
-}
-function getTempCelsius(){
-    return tempToCelsius(getTempRaw(), tempUnitSelect.value);
-}
-
-function getPowerRaw(){
-    return Number(powerInput.value);
-}
-function getPowerWatts(){
-    return getPowerRaw() * UNIT_FACTORS.power[powerUnitSelect.value];
+function isWaterLike(){
+    return materialSelect.value === "water" || materialSelect.value === "ethanol";
 }
 
 /* ============================================================
@@ -1146,15 +1208,12 @@ function getPowerWatts(){
 ============================================================ */
 function updateTempClocks(){
     const m = getMaterial();
-
-    // Rango del dial: cubre desde algo por debajo de Tf hasta algo por encima de Tb
     const minC = Math.min(m.Tf, 0) - 60;
     const maxC = m.Tb + 60;
 
     const Tc = currentTemp;
     const Tk = Tc + 273.15;
 
-    // Normalizamos dentro del rango (clamp)
     const normC = Math.max(0, Math.min(1, (Tc - minC) / (maxC - minC)));
     const angleC = -135 + normC * 270;
 
@@ -1166,12 +1225,9 @@ function updateTempClocks(){
     needleC.setAttribute("transform", `rotate(${angleC.toFixed(2)} 70 70)`);
     needleK.setAttribute("transform", `rotate(${angleK.toFixed(2)} 70 70)`);
 
-    // Lecturas digitales
     clockValueC.textContent = Tc.toFixed(1);
-    // Si el valor es muy grande, mostramos sin decimales
     clockValueK.textContent = Tk >= 1000 ? Tk.toFixed(0) : Tk.toFixed(2);
 
-    // ΔT respecto a la temperatura inicial
     const Ti = getTempCelsius();
     const dT = Tc - Ti;
     deltaClock.textContent  = dT.toFixed(2) + " °C";
@@ -1179,7 +1235,7 @@ function updateTempClocks(){
 }
 
 /* ============================================================
-   PANEL DE CONVERSIÓN A UNIDADES UNIVERSALES
+   CONVERSIÓN A SI
 ============================================================ */
 function updateConversionPanel(){
     const mUnit = massUnitSelect.value;
@@ -1205,9 +1261,6 @@ function updateConversionPanel(){
     convPowerOut.textContent = `${powerW.toFixed(2)} W`;
 }
 
-/* ============================================================
-   FLASH DE CONVERSIÓN
-============================================================ */
 function flashConv(){
     convBox.classList.remove("flash");
     void convBox.offsetWidth;
@@ -1227,6 +1280,8 @@ function resetState(){
     inBoiling = false;
     currentTemp = getTempCelsius();
     vaporsElement.innerHTML = "";
+    bubblesElement.innerHTML = "";
+    bubbleTimer = 0;
 }
 
 /* ============================================================
@@ -1243,8 +1298,8 @@ function updateParticles(){
 
 function createParticles(){
     particlesElement.innerHTML = "";
-    const isWater = materialSelect.value === "water";
-    const number  = isWater ? 22 : 14;
+    const wl = isWaterLike();
+    const number = wl ? 22 : 14;
 
     for (let i = 0; i < number; i++){
         const p = document.createElement("div");
@@ -1268,7 +1323,7 @@ function createParticles(){
 }
 
 /* ============================================================
-   VAPOR
+   VAPOR Y BURBUJAS
 ============================================================ */
 function createVapor(){
     const v = document.createElement("div");
@@ -1278,6 +1333,18 @@ function createVapor(){
     v.style.setProperty("--drift", ((Math.random() - 0.5) * 130) + "px");
     vaporsElement.appendChild(v);
     setTimeout(() => v.remove(), 4500);
+}
+
+function createBubble(){
+    const b = document.createElement("div");
+    b.className = "bubble";
+    const size = 5 + Math.random() * 10;
+    b.style.width  = size + "px";
+    b.style.height = size + "px";
+    b.style.left   = (20 + Math.random() * 340) + "px";
+    b.style.bottom = (10 + Math.random() * 40) + "px";
+    bubblesElement.appendChild(b);
+    setTimeout(() => b.remove(), 2000);
 }
 
 /* ============================================================
@@ -1318,25 +1385,123 @@ function updatePhase(){
         document.getElementById("gasPhase").classList.add("active");
         statusElement.textContent = "💨 Ebullición / vaporización";
     }
-
-    if (materialSelect.value === "water" && currentTemp >= m.Tb){
-        waterElement.style.background =
-            "linear-gradient(to bottom,#35bfff,#1261a0)";
-    }
 }
 
 /* ============================================================
-   VISUAL MATERIAL
+   🎨 VISUAL REALISTA POR FASES
 ============================================================ */
-function updateMaterialVisual(){
-    const m = getMaterial();
-    objectElement.className = "material-object";
-    objectElement.classList.add(m.color);
-    objectElement.style.display = (materialSelect.value === "water") ? "none" : "block";
+function updateSimulationVisuals(){
+    const m    = getMaterial();
+    const mass = getMassGrams();
+
+    const Ti       = getTempCelsius();
+    const T        = currentTemp;
+    const waterLike = isWaterLike();
+
+    // --- Progresos de fusión y vaporización (0 a 1) ---
+    const totalFusion = mass * m.Lf;
+    const totalVapor  = mass * m.Lv;
+
+    let fusionProgress = 0;
+    let vaporProgress  = 0;
+
+    if (totalFusion > 0) fusionProgress = Math.min(1, fusionEnergyUsed / totalFusion);
+    if (totalVapor  > 0) vaporProgress  = Math.min(1, vaporEnergyUsed  / totalVapor);
+
+    // Si empezamos por encima de Tf, ya arranca líquido
+    if (Ti >= m.Tf) fusionProgress = 1;
+
+    // Fracción líquida = lo que se ha fundido menos lo que se ha vaporizado
+    const liquidFraction = Math.max(0, Math.min(1,
+        fusionProgress * (1 - vaporProgress)
+    ));
+
+    // ---- Recipiente: cambia a "crisol" si es metal ----
+    if (waterLike){
+        beakerElement.classList.remove("crucible");
+    } else {
+        beakerElement.classList.add("crucible");
+    }
+
+    // ---- Visibilidad de elementos ----
+    if (waterLike){
+        // AGUA / ETANOL
+        waterElement.style.display = "block";
+        objectElement.style.display = "none";
+        moltenPoolElement.style.opacity = "0";
+        moltenPoolElement.style.height  = "0px";
+
+        // Cubo de hielo: visible si aún queda sólido
+        if (fusionProgress < 0.99 && Ti < m.Tf){
+            iceCubeElement.style.display = "block";
+            const iceScale = 1 - fusionProgress;
+            iceCubeElement.style.transform =
+                `translateX(-50%) scale(${iceScale.toFixed(3)})`;
+            iceCubeElement.style.opacity = fusionProgress < 0.99 ? "1" : "0";
+        } else {
+            iceCubeElement.style.display = "none";
+        }
+
+        // Nivel de agua (0% a 74%)
+        const waterLevel = 74 * liquidFraction;
+        waterElement.style.height = waterLevel.toFixed(2) + "%";
+
+        // Tinte de agua o etanol
+        if (materialSelect.value === "ethanol"){
+            waterElement.classList.add("ethanol");
+        } else {
+            waterElement.classList.remove("ethanol");
+        }
+    }
+    else {
+        // METALES
+        waterElement.style.display = "none";
+        waterElement.style.height = "0%";
+        iceCubeElement.style.display = "none";
+
+        // Pieza metálica sólida: se encoge al fundirse
+        const metalScale = 1 - fusionProgress;
+        objectElement.style.display = metalScale > 0.02 ? "block" : "none";
+        objectElement.style.transform =
+            `translateX(-50%) scale(${metalScale.toFixed(3)})`;
+        objectElement.style.opacity = metalScale > 0.02 ? "1" : "0";
+
+        // Pieza brilla al acercarse a Tf
+        if (T > m.Tf - 80 && T < m.Tf + 20){
+            objectElement.classList.add("glow");
+        } else {
+            objectElement.classList.remove("glow");
+        }
+
+        // Piscina de metal fundido
+        const poolMaxHeight = 55;
+        const poolHeight = poolMaxHeight * liquidFraction;
+        moltenPoolElement.classList.remove("aluminum","copper","iron","gold","lead");
+        moltenPoolElement.classList.add(m.color);
+        moltenPoolElement.style.height  = poolHeight.toFixed(2) + "px";
+        moltenPoolElement.style.opacity = liquidFraction > 0.02 ? "1" : "0";
+    }
+
+    // ---- Burbujas durante ebullición ----
+    const isBoilingNow = (T >= m.Tb) && (vaporProgress < 1);
+    if (waterLike && isBoilingNow){
+        // Spawneamos según potencia
+        const rate = 0.15 + Math.min(getPowerWatts() / 4000, 0.5);
+        bubbleTimer += rate;
+        while (bubbleTimer >= 1){
+            createBubble();
+            bubbleTimer -= 1;
+        }
+    } else {
+        bubbleTimer = 0;
+    }
+
+    // ---- Vapor ----
+    // (Se genera en simulate() para no duplicar)
 }
 
 /* ============================================================
-   CÁLCULOS
+   CÁLCULOS NUMÉRICOS
 ============================================================ */
 function updateCalculations(){
     const m    = getMaterial();
@@ -1432,7 +1597,7 @@ function updateCalculations(){
 }
 
 /* ============================================================
-   GRÁFICA
+   GRÁFICA T vs Q
 ============================================================ */
 function computeCurve(){
     const m    = getMaterial();
@@ -1646,7 +1811,7 @@ function updateUI(){
 
     updatePhase();
     updateCalculations();
-    updateMaterialVisual();
+    updateSimulationVisuals();
     updateConversionPanel();
     updateTempClocks();
 
@@ -1727,7 +1892,7 @@ function simulate(time){
             vaporEnergyUsed += used;
             remainingEnergy -= used;
 
-            if (materialSelect.value === "water" && Math.random() < 0.55){
+            if (Math.random() < 0.4){
                 createVapor();
             }
 
@@ -1772,7 +1937,7 @@ document.getElementById("reset").addEventListener("click", () => {
 });
 
 /* ============================================================
-   CONTROLES
+   CONTROLES Y CONVERSIÓN
 ============================================================ */
 powerInput.addEventListener("input", () => {
     document.getElementById("powerValue").textContent =
@@ -1785,7 +1950,6 @@ speedInput.addEventListener("input", () => {
     document.getElementById("speedValue").textContent = speedInput.value;
 });
 
-/* ----- MASA: conversión al cambiar la unidad ----- */
 massUnitSelect.dataset.prev = massUnitSelect.value;
 massUnitSelect.addEventListener("change", () => {
     const prevU = massUnitSelect.dataset.prev;
@@ -1800,7 +1964,6 @@ massUnitSelect.addEventListener("change", () => {
     updateUI();
 });
 
-/* ----- TEMPERATURA: conversión al cambiar la unidad ----- */
 tempUnitSelect.dataset.prev = tempUnitSelect.value;
 tempUnitSelect.addEventListener("change", () => {
     const prevU = tempUnitSelect.dataset.prev;
@@ -1815,7 +1978,6 @@ tempUnitSelect.addEventListener("change", () => {
     updateUI();
 });
 
-/* ----- POTENCIA: conversión al cambiar la unidad ----- */
 powerUnitSelect.dataset.prev = powerUnitSelect.value;
 powerUnitSelect.addEventListener("change", () => {
     const prevU = powerUnitSelect.dataset.prev;
@@ -1837,7 +1999,6 @@ powerUnitSelect.addEventListener("change", () => {
 materialSelect.addEventListener("change", () => {
     resetState();
     createParticles();
-    updateMaterialVisual();
     flashConv();
     updateUI();
 });
@@ -1887,7 +2048,6 @@ function createTable(){
 ============================================================ */
 createTable();
 createParticles();
-updateMaterialVisual();
 updateUI();
 
 setTimeout(() => flashConv(), 300);
@@ -1896,32 +2056,6 @@ setTimeout(() => flashConv(), 300);
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
