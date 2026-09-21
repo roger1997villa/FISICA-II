@@ -18,63 +18,73 @@ body{
 }
 
 /* ==================================================
-   BARRA DE RELOJES (sticky)
+   BARRA STICKY CON RELOJES DE TEMPERATURA
 ================================================== */
 
-.clock-strip{
+.temp-clocks-strip{
     position:sticky;
     top:0;
     z-index:200;
     display:flex;
-    gap:14px;
+    gap:22px;
     padding:10px 22px;
     background:linear-gradient(135deg,#03080f,#0a1830);
     border-bottom:1px solid #1c3a63;
     backdrop-filter:blur(6px);
     flex-wrap:wrap;
     align-items:center;
-    justify-content:flex-end;
+    justify-content:center;
 }
 
-.clock-box{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:6px 14px;
-    border-radius:20px;
-    background:#071629;
-    border:1px solid #234a7c;
-    box-shadow:0 0 12px rgba(20,140,255,.08) inset;
-}
-
-.clock-box .clock-icon{
-    font-size:18px;
-    line-height:1;
-}
-
-.clock-box .clock-info{
+.temp-clock{
     display:flex;
     flex-direction:column;
-    line-height:1.1;
+    align-items:center;
+    padding:6px 16px;
+    border-radius:16px;
+    background:#071629;
+    border:1px solid #234a7c;
+    box-shadow:0 0 14px rgba(20,140,255,.10) inset;
 }
 
-.clock-box .clock-value{
-    font-family:"Courier New",monospace;
-    font-size:17px;
-    font-weight:bold;
-    color:#69d2ff;
-    letter-spacing:.5px;
-}
-
-.clock-box .clock-label{
+.temp-clock .clock-title{
     font-size:10.5px;
     color:#7f9ab9;
     text-transform:uppercase;
-    letter-spacing:.6px;
+    letter-spacing:.9px;
+    margin-bottom:2px;
 }
 
-.clock-box.timer .clock-value{
-    color:#ff9a4d;
+.temp-clock .dial{
+    width:130px;
+    height:130px;
+    display:block;
+}
+
+.temp-clock.kelvin{
+    border-color:#5c2f8a;
+    box-shadow:0 0 14px rgba(170,90,255,.18) inset;
+}
+
+.temp-clock.kelvin .clock-title{
+    color:#c39ff0;
+}
+
+.temp-status{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 16px;
+    border-radius:20px;
+    background:#0b1c33;
+    border:1px solid #1c3a63;
+    font-size:13px;
+    color:#9eb6d8;
+}
+
+.temp-status strong{
+    color:#69d2ff;
+    font-family:"Courier New",monospace;
 }
 
 /* ==================================================
@@ -106,8 +116,6 @@ header p{ margin:5px 0 0; color:#9eb6d8; }
     grid-template-columns:310px 1fr 380px;
     gap:18px;
 }
-
-/* ---------------- PANEL ---------------- */
 
 .panel{
     background:#0c172b;
@@ -398,8 +406,6 @@ button{
     }
 }
 
-/* ---------------- METRICAS ---------------- */
-
 .metrics{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -490,7 +496,7 @@ button{
     font-size:14px;
 }
 
-/* ---------------- CONVERSIÓN EN VIVO ---------------- */
+/* ---------------- CONVERSIÓN UNIVERSAL ---------------- */
 
 .conv-box{
     padding:14px;
@@ -521,24 +527,32 @@ button{
     grid-template-columns:1fr auto auto auto;
     align-items:center;
     gap:8px;
-    padding:7px 0;
+    padding:8px 0;
     border-bottom:1px dashed #1a3355;
     font-size:13px;
 }
 
-.conv-row:last-child{ border-bottom:0; }
+.conv-row:last-of-type{ border-bottom:0; }
 
 .conv-name{ color:#8ea8c9; }
 .conv-in{ color:#dfe9ff; font-weight:bold; text-align:right; }
 .conv-arrow{ color:#49c5ff; font-weight:bold; }
-.conv-out{ color:#69d2ff; font-weight:bold; text-align:right; }
+.conv-out{
+    color:#ffb45a;
+    font-weight:bold;
+    text-align:right;
+    font-family:"Courier New",monospace;
+}
 
 .conv-note{
-    margin-top:8px;
+    margin-top:10px;
+    padding:8px 10px;
     font-size:11.5px;
-    color:#7f9ab9;
+    color:#9fd4ff;
     text-align:center;
-    font-style:italic;
+    background:#0b1c33;
+    border-radius:8px;
+    border:1px solid #1d3c66;
 }
 
 /* ---------------- TABLA ---------------- */
@@ -576,7 +590,7 @@ td{ color:#d0dbee; }
 .phase-item.active{ background:#126da5; color:white; }
 .phase-item.change{ background:#7b4d1e; color:white; }
 
-/* ---------------- GRÁFICA T vs Q ---------------- */
+/* ---------------- GRÁFICA ---------------- */
 
 .graph-card{ grid-column:1 / -1; }
 
@@ -630,7 +644,8 @@ td{ color:#d0dbee; }
     .layout{ grid-template-columns:1fr; }
     .metrics{ grid-template-columns:repeat(2,1fr); }
     .beaker{ width:300px; }
-    .clock-strip{ justify-content:center; }
+    .temp-clocks-strip{ gap:12px; }
+    .temp-clock .dial{ width:100px; height:100px; }
 }
 
 </style>
@@ -639,24 +654,80 @@ td{ color:#d0dbee; }
 <body>
 
 <!-- ============================================================
-     BARRA DE RELOJES (siempre visible)
+     BARRA STICKY: RELOJES DE TEMPERATURA
 ============================================================ -->
-<div class="clock-strip">
+<div class="temp-clocks-strip">
 
-    <div class="clock-box">
-        <div class="clock-icon">🕐</div>
-        <div class="clock-info">
-            <div class="clock-value" id="realClock">--:--:--</div>
-            <div class="clock-label">Hora actual</div>
-        </div>
+    <!-- Reloj de temperatura en °C -->
+    <div class="temp-clock">
+        <div class="clock-title">Temperatura · Celsius</div>
+        <svg class="dial" viewBox="0 0 140 140">
+            <!-- Fondo -->
+            <circle cx="70" cy="70" r="58" fill="#03101f" stroke="#234a7c" stroke-width="2"/>
+            <!-- Arco de escala -->
+            <path d="M 30 108 A 50 50 0 1 1 110 108"
+                  fill="none" stroke="#1c3a63" stroke-width="6" stroke-linecap="round"/>
+            <!-- Marcas -->
+            <g stroke="#4a7bb0" stroke-width="2" stroke-linecap="round">
+                <line x1="70" y1="16" x2="70" y2="24"/>
+                <line x1="30" y1="42" x2="37" y2="47"/>
+                <line x1="110" y1="42" x2="103" y2="47"/>
+                <line x1="20" y1="80" x2="28" y2="80"/>
+                <line x1="120" y1="80" x2="112" y2="80"/>
+                <line x1="30" y1="108" x2="37" y2="103"/>
+                <line x1="110" y1="108" x2="103" y2="103"/>
+            </g>
+            <!-- Aguja -->
+            <g id="needleC" transform="rotate(0 70 70)">
+                <line x1="70" y1="70" x2="70" y2="26"
+                      stroke="#49c5ff" stroke-width="3.5" stroke-linecap="round"/>
+            </g>
+            <circle cx="70" cy="70" r="7" fill="#0c172b" stroke="#49c5ff" stroke-width="2"/>
+            <!-- Lectura digital -->
+            <text x="70" y="100" text-anchor="middle"
+                  fill="#ffffff" font-size="17" font-weight="bold"
+                  font-family="Arial" id="clockValueC">20.0</text>
+            <text x="70" y="118" text-anchor="middle"
+                  fill="#49c5ff" font-size="12" font-weight="bold"
+                  font-family="Arial">°C</text>
+        </svg>
     </div>
 
-    <div class="clock-box timer">
-        <div class="clock-icon">⏱️</div>
-        <div class="clock-info">
-            <div class="clock-value" id="convTimer">0.00 s</div>
-            <div class="clock-label">Desde última conversión</div>
-        </div>
+    <!-- Reloj de temperatura en Kelvin -->
+    <div class="temp-clock kelvin">
+        <div class="clock-title">Temperatura · Kelvin (SI)</div>
+        <svg class="dial" viewBox="0 0 140 140">
+            <circle cx="70" cy="70" r="58" fill="#03101f" stroke="#5c2f8a" stroke-width="2"/>
+            <path d="M 30 108 A 50 50 0 1 1 110 108"
+                  fill="none" stroke="#3a1c5c" stroke-width="6" stroke-linecap="round"/>
+            <g stroke="#7c5cae" stroke-width="2" stroke-linecap="round">
+                <line x1="70" y1="16" x2="70" y2="24"/>
+                <line x1="30" y1="42" x2="37" y2="47"/>
+                <line x1="110" y1="42" x2="103" y2="47"/>
+                <line x1="20" y1="80" x2="28" y2="80"/>
+                <line x1="120" y1="80" x2="112" y2="80"/>
+                <line x1="30" y1="108" x2="37" y2="103"/>
+                <line x1="110" y1="108" x2="103" y2="103"/>
+            </g>
+            <g id="needleK" transform="rotate(0 70 70)">
+                <line x1="70" y1="70" x2="70" y2="26"
+                      stroke="#c39ff0" stroke-width="3.5" stroke-linecap="round"/>
+            </g>
+            <circle cx="70" cy="70" r="7" fill="#0c172b" stroke="#c39ff0" stroke-width="2"/>
+            <text x="70" y="100" text-anchor="middle"
+                  fill="#ffffff" font-size="15" font-weight="bold"
+                  font-family="Arial" id="clockValueK">293.15</text>
+            <text x="70" y="118" text-anchor="middle"
+                  fill="#c39ff0" font-size="12" font-weight="bold"
+                  font-family="Arial">K</text>
+        </svg>
+    </div>
+
+    <div class="temp-status">
+        <span>ΔT actual:</span>
+        <strong id="deltaClock">0.00 °C</strong>
+        <span>|</span>
+        <strong id="deltaClockK">0.00 K</strong>
     </div>
 
 </div>
@@ -666,7 +737,7 @@ td{ color:#d0dbee; }
         <div class="logo-icon">🌡️</div>
         <div>
             <h1>ThermoLab</h1>
-            <p>Calor específico y cambio de fase · con conversor de unidades</p>
+            <p>Calor específico y cambio de fase · unidades SI: K y kg</p>
         </div>
     </div>
 </header>
@@ -778,14 +849,14 @@ td{ color:#d0dbee; }
                 <small>J/g·°C</small>
             </div>
             <div class="metric">
-                <small>Masa (g)</small>
-                <strong id="massDisplay">100</strong>
-                <small>g</small>
+                <small>Masa</small>
+                <strong id="massDisplay">0.100</strong>
+                <small>kg</small>
             </div>
             <div class="metric">
                 <small>ΔT</small>
                 <strong id="deltaT">0</strong>
-                <small>°C</small>
+                <small>K</small>
             </div>
             <div class="metric">
                 <small>Calor Q</small>
@@ -809,38 +880,44 @@ td{ color:#d0dbee; }
     </section>
 
     <!-- =====================================================
-         ECUACIONES + CONVERSIÓN
+         ECUACIONES + CONVERSIÓN UNIVERSAL
     ====================================================== -->
     <section class="equation-card">
 
-        <h2>🧮 Ecuaciones y conversión</h2>
+        <h2>🧮 Ecuaciones y unidades universales</h2>
 
-        <!-- CONVERSOR EN VIVO -->
+        <!-- CONVERSOR A SI -->
         <div class="eq-section">
-            <div class="eq-title">🔄 0. Conversión a unidades de trabajo</div>
+            <div class="eq-title">🔄 0. Conversión a unidades universales (SI)</div>
 
             <div class="conv-box" id="convBox">
+
                 <div class="conv-row">
                     <span class="conv-name">Masa</span>
                     <span class="conv-in" id="convMassIn">100 g</span>
                     <span class="conv-arrow">→</span>
-                    <span class="conv-out" id="convMassOut">100 g</span>
+                    <span class="conv-out" id="convMassOut">0.1000 kg</span>
                 </div>
+
                 <div class="conv-row">
                     <span class="conv-name">Temperatura</span>
                     <span class="conv-in" id="convTempIn">20 °C</span>
                     <span class="conv-arrow">→</span>
-                    <span class="conv-out" id="convTempOut">20 °C</span>
+                    <span class="conv-out" id="convTempOut">293.15 K</span>
                 </div>
+
                 <div class="conv-row">
                     <span class="conv-name">Potencia</span>
                     <span class="conv-in" id="convPowerIn">1000 W</span>
                     <span class="conv-arrow">→</span>
                     <span class="conv-out" id="convPowerOut">1000 W</span>
                 </div>
+
                 <div class="conv-note">
-                    Los cálculos se realizan siempre en g, °C y W (J/s).
+                    Unidades universales del SI: <b>kelvin (K)</b> y <b>kilogramo (kg)</b>.
+                    La potencia ya está en vatios (J/s).
                 </div>
+
             </div>
         </div>
 
@@ -872,7 +949,7 @@ td{ color:#d0dbee; }
     </section>
 
     <!-- =====================================================
-         GRÁFICA T vs Q
+         GRÁFICA
     ====================================================== -->
     <section class="panel graph-card">
 
@@ -929,10 +1006,8 @@ const materials = {
 };
 
 /* ============================================================
-   CONVERSIÓN DE UNIDADES
+   FACTORES DE CONVERSIÓN
 ============================================================ */
-
-// Factores multiplicativos → unidades de trabajo
 const UNIT_FACTORS = {
     mass: {
         "g":  1,
@@ -949,7 +1024,6 @@ const UNIT_FACTORS = {
     }
 };
 
-// Temperatura (con desplazamiento → a/desde °C)
 function tempToCelsius(v, unit){
     if (unit === "°C") return v;
     if (unit === "°F") return (v - 32) * 5 / 9;
@@ -970,16 +1044,13 @@ function celsiusToTemp(c, unit){
 let running          = false;
 let lastTime         = null;
 let totalEnergy      = 0;
-let currentTemp      = 20;
+let currentTemp      = 20; // siempre en °C internamente
 
 let fusionEnergyUsed = 0;
 let vaporEnergyUsed  = 0;
 
 let inMelting        = false;
 let inBoiling        = false;
-
-// Reloj de conversión
-let lastConversionAt = Date.now();
 
 /* ============================================================
    ELEMENTOS
@@ -1016,11 +1087,15 @@ const explanationElement  = document.getElementById("explanation");
 
 const graphCanvas         = document.getElementById("graph");
 
-// Clocks
-const realClockEl         = document.getElementById("realClock");
-const convTimerEl         = document.getElementById("convTimer");
+// Relojes de temperatura
+const needleC        = document.getElementById("needleC");
+const needleK        = document.getElementById("needleK");
+const clockValueC    = document.getElementById("clockValueC");
+const clockValueK    = document.getElementById("clockValueK");
+const deltaClock     = document.getElementById("deltaClock");
+const deltaClockK    = document.getElementById("deltaClockK");
 
-// Conversión en vivo
+// Conversión
 const convBox             = document.getElementById("convBox");
 const convMassIn          = document.getElementById("convMassIn");
 const convMassOut         = document.getElementById("convMassOut");
@@ -1042,13 +1117,14 @@ function safeNumber(input, fallback){
     return Number.isFinite(v) ? v : fallback;
 }
 
-// ---- Lecturas SI / unidad de trabajo ----
-
 function getMassRaw(){
     return safeNumber(massInput, 100);
 }
 function getMassGrams(){
     return getMassRaw() * UNIT_FACTORS.mass[massUnitSelect.value];
+}
+function getMassKg(){
+    return getMassGrams() / 1000;
 }
 
 function getTempRaw(){
@@ -1066,70 +1142,76 @@ function getPowerWatts(){
 }
 
 /* ============================================================
-   RELOJES
+   RELOJES DE TEMPERATURA
 ============================================================ */
+function updateTempClocks(){
+    const m = getMaterial();
 
-// Hora real (cada segundo)
-function tickRealClock(){
-    const d = new Date();
-    const hh = String(d.getHours()).padStart(2,"0");
-    const mm = String(d.getMinutes()).padStart(2,"0");
-    const ss = String(d.getSeconds()).padStart(2,"0");
-    realClockEl.textContent = `${hh}:${mm}:${ss}`;
-}
-setInterval(tickRealClock, 1000);
-tickRealClock();
+    // Rango del dial: cubre desde algo por debajo de Tf hasta algo por encima de Tb
+    const minC = Math.min(m.Tf, 0) - 60;
+    const maxC = m.Tb + 60;
 
-// Cronómetro de conversión (cada 50 ms)
-function formatElapsed(seconds){
-    if (seconds < 60) return seconds.toFixed(2) + " s";
-    const m = Math.floor(seconds / 60);
-    const s = Math.floor(seconds % 60);
-    if (m < 60) return `${m}m ${String(s).padStart(2,"0")}s`;
-    const h = Math.floor(m / 60);
-    return `${h}h ${String(m % 60).padStart(2,"0")}m`;
-}
-setInterval(() => {
-    const elapsed = (Date.now() - lastConversionAt) / 1000;
-    convTimerEl.textContent = formatElapsed(elapsed);
-}, 50);
+    const Tc = currentTemp;
+    const Tk = Tc + 273.15;
 
-// Marca que hubo una nueva conversión
-function markConversion(){
-    lastConversionAt = Date.now();
-    convTimerEl.textContent = "0.00 s";
+    // Normalizamos dentro del rango (clamp)
+    const normC = Math.max(0, Math.min(1, (Tc - minC) / (maxC - minC)));
+    const angleC = -135 + normC * 270;
 
-    // animación de destello
-    convBox.classList.remove("flash");
-    void convBox.offsetWidth; // reflow
-    convBox.classList.add("flash");
+    const minK = minC + 273.15;
+    const maxK = maxC + 273.15;
+    const normK = Math.max(0, Math.min(1, (Tk - minK) / (maxK - minK)));
+    const angleK = -135 + normK * 270;
+
+    needleC.setAttribute("transform", `rotate(${angleC.toFixed(2)} 70 70)`);
+    needleK.setAttribute("transform", `rotate(${angleK.toFixed(2)} 70 70)`);
+
+    // Lecturas digitales
+    clockValueC.textContent = Tc.toFixed(1);
+    // Si el valor es muy grande, mostramos sin decimales
+    clockValueK.textContent = Tk >= 1000 ? Tk.toFixed(0) : Tk.toFixed(2);
+
+    // ΔT respecto a la temperatura inicial
+    const Ti = getTempCelsius();
+    const dT = Tc - Ti;
+    deltaClock.textContent  = dT.toFixed(2) + " °C";
+    deltaClockK.textContent = dT.toFixed(2) + " K";
 }
 
 /* ============================================================
-   PANEL DE CONVERSIÓN
+   PANEL DE CONVERSIÓN A UNIDADES UNIVERSALES
 ============================================================ */
 function updateConversionPanel(){
     const mUnit = massUnitSelect.value;
     const tUnit = tempUnitSelect.value;
     const pUnit = powerUnitSelect.value;
 
-    const massRaw   = getMassRaw();
-    const massGrams = getMassGrams();
+    const massRaw = getMassRaw();
+    const massKg  = getMassKg();
 
     const tempRaw = getTempRaw();
-    const tempC   = getTempCelsius();
+    const tempK   = getTempCelsius() + 273.15;
 
     const powerRaw = getPowerRaw();
     const powerW   = getPowerWatts();
 
     convMassIn.textContent  = `${massRaw.toFixed(3)} ${mUnit}`;
-    convMassOut.textContent = `${massGrams.toFixed(3)} g`;
+    convMassOut.textContent = `${massKg.toFixed(5)} kg`;
 
     convTempIn.textContent  = `${tempRaw.toFixed(2)} ${tUnit}`;
-    convTempOut.textContent = `${tempC.toFixed(2)} °C`;
+    convTempOut.textContent = `${tempK.toFixed(2)} K`;
 
     convPowerIn.textContent  = `${powerRaw.toFixed(2)} ${pUnit}`;
     convPowerOut.textContent = `${powerW.toFixed(2)} W`;
+}
+
+/* ============================================================
+   FLASH DE CONVERSIÓN
+============================================================ */
+function flashConv(){
+    convBox.classList.remove("flash");
+    void convBox.offsetWidth;
+    convBox.classList.add("flash");
 }
 
 /* ============================================================
@@ -1266,7 +1348,7 @@ function updateCalculations(){
     const Qsensible = mass * m.c * dT;
 
     specificCalculation.innerHTML = `
-        <b>Datos (unidades de trabajo):</b><br>
+        <b>Datos en unidades de trabajo (g y °C):</b><br>
         m = ${mass.toFixed(3)} g<br>
         c = ${m.c.toFixed(3)} J/g·°C<br>
         ΔT = ${T.toFixed(2)} − ${Ti.toFixed(2)} = ${dT.toFixed(2)} °C
@@ -1282,7 +1364,7 @@ function updateCalculations(){
 
         phaseCalculation.innerHTML = `
             <b>Vaporización:</b><br>
-            T<sub>eb</sub> = ${m.Tb} °C<br><br>
+            T<sub>eb</sub> = ${m.Tb} °C = ${(m.Tb+273.15).toFixed(2)} K<br><br>
             L<sub>v</sub> = ${m.Lv} J/g<br>
             Q<sub>latente</sub> = m · L<sub>v</sub><br>
             Q<sub>latente</sub> = ${mass.toFixed(3)} × ${m.Lv}<br>
@@ -1297,9 +1379,9 @@ function updateCalculations(){
 
         explanationElement.innerHTML = `
             <b>💨 ¿Qué ocurre?</b><br><br>
-            Al llegar a ${m.Tb} °C, la sustancia cambia de líquido a gas.
-            La energía se usa para vencer fuerzas intermoleculares,
-            por eso T permanece constante.<br><br>
+            Al llegar a ${m.Tb} °C (= ${(m.Tb+273.15).toFixed(2)} K), la sustancia
+            cambia de líquido a gas. La energía se usa para vencer fuerzas
+            intermoleculares, por eso T permanece constante.<br><br>
             <b>Q = m · L<sub>v</sub></b>
         `;
     }
@@ -1308,7 +1390,7 @@ function updateCalculations(){
 
         phaseCalculation.innerHTML = `
             <b>Fusión:</b><br>
-            T<sub>f</sub> = ${m.Tf} °C<br><br>
+            T<sub>f</sub> = ${m.Tf} °C = ${(m.Tf+273.15).toFixed(2)} K<br><br>
             L<sub>f</sub> = ${m.Lf} J/g<br>
             Q<sub>latente</sub> = m · L<sub>f</sub><br>
             Q<sub>latente</sub> = ${mass.toFixed(3)} × ${m.Lf}<br>
@@ -1331,8 +1413,8 @@ function updateCalculations(){
         phaseCalculation.innerHTML = `
             No hay cambio de fase en este momento.<br><br>
             Si la sustancia alcanza:<br>
-            <b>${m.Tf} °C</b> → fusión<br>
-            <b>${m.Tb} °C</b> → vaporización
+            <b>${m.Tf} °C (${(m.Tf+273.15).toFixed(2)} K)</b> → fusión<br>
+            <b>${m.Tb} °C (${(m.Tb+273.15).toFixed(2)} K)</b> → vaporización
         `;
 
         totalCalculation.innerHTML = `
@@ -1350,7 +1432,7 @@ function updateCalculations(){
 }
 
 /* ============================================================
-   GRÁFICA T vs Q
+   GRÁFICA
 ============================================================ */
 function computeCurve(){
     const m    = getMaterial();
@@ -1416,7 +1498,6 @@ function drawGraph(){
     const toX = Q => padding.left + (Q / maxQ) * plotW;
     const toY = T => padding.top + plotH - ((T - Tlo) / (Thi - Tlo)) * plotH;
 
-    // Grid
     ctx.strokeStyle = "#1a2f4a";
     ctx.lineWidth = 1;
 
@@ -1436,7 +1517,6 @@ function drawGraph(){
         ctx.stroke();
     }
 
-    // Etiquetas X
     ctx.fillStyle = "#8ea8c9";
     ctx.font = "12px Arial";
     ctx.textAlign = "center";
@@ -1450,7 +1530,6 @@ function drawGraph(){
     ctx.font = "bold 13px Arial";
     ctx.fillText("Q (J)", padding.left + plotW / 2, H - 8);
 
-    // Etiquetas Y
     ctx.textAlign = "right";
     ctx.fillStyle = "#8ea8c9";
     ctx.font = "12px Arial";
@@ -1469,7 +1548,6 @@ function drawGraph(){
     ctx.fillText("T (°C)", 0, 0);
     ctx.restore();
 
-    // Área
     ctx.beginPath();
     ctx.moveTo(toX(points[0].Q), toY(points[0].T));
     for (let i = 1; i < points.length; i++){
@@ -1485,7 +1563,6 @@ function drawGraph(){
     ctx.fillStyle = grad;
     ctx.fill();
 
-    // Curva
     ctx.strokeStyle = "#49c5ff";
     ctx.lineWidth = 2.5;
     ctx.shadowColor = "#49c5ff";
@@ -1498,7 +1575,6 @@ function drawGraph(){
     ctx.stroke();
     ctx.shadowBlur = 0;
 
-    // Mesetas
     for (let i = 1; i < points.length; i++){
         const a = points[i - 1];
         const b = points[i];
@@ -1524,7 +1600,6 @@ function drawGraph(){
         }
     }
 
-    // Punto actual
     const Qnow = Math.max(0, Math.min(totalEnergy, maxQ));
     const Tnow = Math.max(Tlo, Math.min(currentTemp, Thi));
     const cx = toX(Qnow);
@@ -1544,7 +1619,6 @@ function drawGraph(){
     ctx.arc(cx, cy, 7, 0, Math.PI * 2);
     ctx.stroke();
 
-    // Línea guía
     ctx.strokeStyle = "rgba(255,74,110,0.35)";
     ctx.setLineDash([4, 4]);
     ctx.lineWidth = 1;
@@ -1560,13 +1634,13 @@ function drawGraph(){
 ============================================================ */
 function updateUI(){
     const m    = getMaterial();
-    const mass = getMassGrams();
+    const massG = getMassGrams();
     const Ti   = getTempCelsius();
 
     temperatureElement.textContent  = currentTemp.toFixed(2) + " °C";
     energyElement.textContent       = "Energía suministrada: " + totalEnergy.toFixed(1) + " J";
     specificHeatElement.textContent = m.c.toFixed(3);
-    massDisplay.textContent         = mass.toFixed(2);
+    massDisplay.textContent         = (massG / 1000).toFixed(4);
     deltaTElement.textContent       = (currentTemp - Ti).toFixed(2);
     qDisplay.textContent            = totalEnergy.toFixed(1);
 
@@ -1574,8 +1648,8 @@ function updateUI(){
     updateCalculations();
     updateMaterialVisual();
     updateConversionPanel();
+    updateTempClocks();
 
-    // Fuego
     if (running){
         const p = getPowerWatts();
         flameElement.style.opacity   = 0.25 + Math.min(p / 7000, 0.7);
@@ -1584,10 +1658,9 @@ function updateUI(){
         flameElement.style.opacity = "0.15";
     }
 
-    // Progreso por energía
     let totalNeeded = 0;
-    if (Ti < m.Tf) totalNeeded += mass * m.c * (m.Tf - Ti) + mass * m.Lf;
-    totalNeeded += mass * m.c * (m.Tb - Math.max(Ti, m.Tf)) + mass * m.Lv;
+    if (Ti < m.Tf) totalNeeded += massG * m.c * (m.Tf - Ti) + massG * m.Lf;
+    totalNeeded += massG * m.c * (m.Tb - Math.max(Ti, m.Tf)) + massG * m.Lv;
 
     const pct = totalNeeded > 0
         ? Math.max(0, Math.min(100, (totalEnergy / totalNeeded) * 100))
@@ -1699,14 +1772,12 @@ document.getElementById("reset").addEventListener("click", () => {
 });
 
 /* ============================================================
-   CONTROLES + CONVERSIÓN AUTOMÁTICA DE UNIDADES
+   CONTROLES
 ============================================================ */
-
-// Potencia: slider y display
 powerInput.addEventListener("input", () => {
     document.getElementById("powerValue").textContent =
         Number(powerInput.value).toFixed(1);
-    markConversion();
+    flashConv();
     updateUI();
 });
 
@@ -1714,7 +1785,7 @@ speedInput.addEventListener("input", () => {
     document.getElementById("speedValue").textContent = speedInput.value;
 });
 
-// ----- Conversión al cambiar la unidad de MASA -----
+/* ----- MASA: conversión al cambiar la unidad ----- */
 massUnitSelect.dataset.prev = massUnitSelect.value;
 massUnitSelect.addEventListener("change", () => {
     const prevU = massUnitSelect.dataset.prev;
@@ -1724,12 +1795,12 @@ massUnitSelect.addEventListener("change", () => {
     const newVal = grams / UNIT_FACTORS.mass[nextU];
     massInput.value = +newVal.toFixed(6);
     massUnitSelect.dataset.prev = nextU;
-    markConversion();
+    flashConv();
     if (!running){ resetState(); }
     updateUI();
 });
 
-// ----- Conversión al cambiar la unidad de TEMPERATURA -----
+/* ----- TEMPERATURA: conversión al cambiar la unidad ----- */
 tempUnitSelect.dataset.prev = tempUnitSelect.value;
 tempUnitSelect.addEventListener("change", () => {
     const prevU = tempUnitSelect.dataset.prev;
@@ -1739,12 +1810,12 @@ tempUnitSelect.addEventListener("change", () => {
     const newVal = celsiusToTemp(c, nextU);
     initialTempInput.value = +newVal.toFixed(3);
     tempUnitSelect.dataset.prev = nextU;
-    markConversion();
+    flashConv();
     if (!running){ resetState(); }
     updateUI();
 });
 
-// ----- Conversión al cambiar la unidad de POTENCIA -----
+/* ----- POTENCIA: conversión al cambiar la unidad ----- */
 powerUnitSelect.dataset.prev = powerUnitSelect.value;
 powerUnitSelect.addEventListener("change", () => {
     const prevU = powerUnitSelect.dataset.prev;
@@ -1752,7 +1823,6 @@ powerUnitSelect.addEventListener("change", () => {
     const v = Number(powerInput.value);
     const watts = v * UNIT_FACTORS.power[prevU];
     const newVal = watts / UNIT_FACTORS.power[nextU];
-    // reajustamos el slider si el valor se sale del rango
     powerInput.value = Math.max(
         Number(powerInput.min),
         Math.min(Number(powerInput.max), +newVal.toFixed(4))
@@ -1760,22 +1830,20 @@ powerUnitSelect.addEventListener("change", () => {
     document.getElementById("powerValue").textContent =
         Number(powerInput.value).toFixed(1);
     powerUnitSelect.dataset.prev = nextU;
-    markConversion();
+    flashConv();
     updateUI();
 });
 
-// ----- Material -----
 materialSelect.addEventListener("change", () => {
     resetState();
     createParticles();
     updateMaterialVisual();
-    markConversion();
+    flashConv();
     updateUI();
 });
 
-// ----- Temperatura inicial -----
 initialTempInput.addEventListener("input", () => {
-    markConversion();
+    flashConv();
     if (!running){
         currentTemp = getTempCelsius();
         totalEnergy = 0;
@@ -1787,9 +1855,8 @@ initialTempInput.addEventListener("input", () => {
     }
 });
 
-// ----- Masa -----
 massInput.addEventListener("input", () => {
-    markConversion();
+    flashConv();
     if (!running){
         updateUI();
     }
@@ -1806,9 +1873,9 @@ function createTable(){
         row.innerHTML = `
             <td>${m.name}</td>
             <td>${m.c}</td>
-            <td>${m.Tf} °C</td>
+            <td>${m.Tf} °C · ${(m.Tf+273.15).toFixed(2)} K</td>
             <td>${m.Lf} J/g</td>
-            <td>${m.Tb} °C</td>
+            <td>${m.Tb} °C · ${(m.Tb+273.15).toFixed(2)} K</td>
             <td>${m.Lv} J/g</td>
         `;
         table.appendChild(row);
@@ -1823,53 +1890,12 @@ createParticles();
 updateMaterialVisual();
 updateUI();
 
-// Forzamos un primer flash para que se vea la animación al abrir
-setTimeout(() => markConversion(), 300);
+setTimeout(() => flashConv(), 300);
 
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
